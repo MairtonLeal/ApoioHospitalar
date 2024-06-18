@@ -1,0 +1,78 @@
+<ion-content fullscreen="true">
+  <div class="onboard-background">
+    <div class="onboard-content">
+      <div class="position-bottom">
+        <h2>
+         Bem vindo à Sollow
+        </h2>
+        <p>
+          Encontre profissionais capacitados para
+           estadias hospitalares
+        </p>
+        <ion-button 
+        class="sl-logged button-onboard"
+        color="primary"
+        (click)="start()" 
+        expand="block"
+         expand="block">
+        <ion-label>
+          Buscar meu profissional
+        </ion-label>
+      </ion-button>
+    </div>
+    </div>
+  </div>
+<!-- <ion-content  class="onboarding" fullscreen="true" scrollY="false">
+
+
+  <ion-slides [options]="slideOpts" pager="true" #slides>
+
+    <ion-slide *ngFor="let slide of Slides; let i = index;" class="ion-text-start" mode="md">
+      <div class="slide-inner-wrapper ion-padding-vertical">
+
+        <ion-grid class="slide-header">
+          <ion-row>
+            <ion-col size="6">
+              <ion-button *ngIf="slide !== 0" (click)="navigate(slides , i-1 )" size="small" color="dark" fill="clear">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" class="ion-text-end">
+              <ion-button *ngIf="i < Slides.length - 1" (click)="skip()" size="small" color="dark" fill="clear">
+                Pular
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid> -->
+
+        <!-- Body -->
+        <!-- <div class="slide-body ion-text-center">
+          <img *ngIf="!slide.imgBottom" src="../assets/{{ slide.img }}" alt="{{ slide.title }}">
+          <div class="text-wrapper ion-text-start ion-text-sm-center">
+            <h1>{{ slide.title }}</h1>
+            <ion-text>{{ slide.text }}</ion-text>
+          </div>
+          <img *ngIf="slide.imgBottom" src="../assets/{{ slide.img }}" alt="{{ slide.title }}">
+        </div> -->
+
+        <!-- Footer -->
+        <!-- <div class="slide-footer ion-text-end">
+          <ion-button *ngIf="i < Slides.length - 1" class="ion-color-primary-gradient" (click)="navigate(slides , i+1)"
+          color="primary" mode="ios" size="large" shape="round" strong="true">
+        <ion-label color="light">
+          Avançar
+          </ion-label>
+        </ion-button>
+          <ion-button mode="ios" *ngIf="i === Slides.length - 1" class="ion-color-primary-gradient" (click)="start()"
+          color="primary"  size="large" shape="round" strong="true">
+          <ion-label color="light">
+            Começar
+          </ion-label>
+        </ion-button>
+        </div>
+
+      </div>
+    </ion-slide>
+  </ion-slides> -->
+
+</ion-content>

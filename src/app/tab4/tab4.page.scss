@@ -1,0 +1,35 @@
+.default-top-padding {
+    padding-top: 26px !important;
+  }
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 42px 26px 16px 26px;
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #364F6B;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ion-color-sl);
+    }
+  }
+
+  .sl-list{
+    background: transparent;
+
+    ion-item{
+      padding:10px;
+      --background: transparent;
+    }
+  }
+
+  ion-content{
+    --background: #f1f5f8;
+  }

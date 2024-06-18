@@ -1,0 +1,319 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Detalhes Estadia
+    </ion-title>
+    <ion-button (click)="fechar()" fill="clear" slot="end">
+      <ion-icon color="light" name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div>
+    <div class="margin-top">
+      <ion-card class="card-alert">
+        <ion-card-header>
+          <div>
+            <ion-icon size="large" color="primary" name="information-circle-outline"></ion-icon>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label class="descricao-card-alert">
+            Veja mais detalhes da sua solicitação
+            aqui
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <ion-card *ngIf="estadiaDados?.statusEstadia ==='Aguardando'" class="card-info">
+      <ion-card-header class="flex-start">
+        <ion-icon class="margin-right-10" size="large" color="primary" name="pulse"></ion-icon>
+        <ion-card-subtitle>
+          Status: Solicitando Estadia
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="flex-start">
+          <!-- <ion-icon class="margin-right-10" color="primary" size="large" name="at"></ion-icon> -->
+          <ion-label class="text-info">
+            <p>
+              Aguardando confirmação da sua estadia
+            </p>
+          </ion-label>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+
+    <!-- Confirmado -->
+    <ion-card *ngIf="estadiaDados?.statusEstadia ==='Confirmado'" class="card-info">
+      <ion-card-header class="flex-start">
+        <ion-icon class="margin-right-10" size="large" color="primary" name="checkmark"></ion-icon>
+        <ion-card-subtitle>
+          Status: Confirmado
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="flex-start">
+          <ion-icon class="margin-right-10" color="primary" size="large" name="pin"></ion-icon>
+          <ion-label class="text-info">
+            <p>
+              Aguarde na data e hora agendada
+            </p>
+          </ion-label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Iniciar_Atendimento -->
+    <ion-card *ngIf="estadiaDados?.statusEstadia ==='Iniciar_Estadia'" class="card-info">
+      <ion-card-header class="flex-start">
+        <ion-icon class="margin-right-10" size="large" color="primary" name="walk"></ion-icon>
+        <ion-card-subtitle>
+          Status: Estadia à caminho
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="flex-start">
+          <ion-icon class="margin-right-10" color="primary" size="large" name="pin"></ion-icon>
+          <ion-label class="text-info">
+            <p>
+              Seu profissional está à caminho do hospital ou no local
+              informado no ponto de encontro.
+            </p>
+          </ion-label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+
+
+    <!-- Confirmado_Atendimento -->
+    <ion-card *ngIf="estadiaDados?.statusEstadia ==='Em_Estadia'" class="card-info">
+      <ion-card-header class="flex-start">
+        <ion-icon class="margin-right-10" size="large" color="primary" name="business"></ion-icon>
+        <ion-card-subtitle>
+          Status: Estada Iniciada
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="flex-start">
+          <ion-icon class="margin-right-10" color="primary" size="large" name="pin"></ion-icon>
+          <ion-label class="text-info">
+            <p>
+              Profissional iniciou sua estadia no hospital.
+            </p>
+          </ion-label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Concluido -->
+    <ion-card *ngIf="estadiaDados?.statusEstadia === 'Concluido'" class="card-info">
+      <ion-card-header class="flex-start">
+        <ion-icon class="margin-right-10" size="large" color="primary" name="checkmark-done-circle"></ion-icon>
+        <ion-card-subtitle>
+          Status: Estadia Concluida
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="flex-start">
+          <ion-icon class="margin-right-10" color="primary" size="large" name="pin"></ion-icon>
+          <ion-label class="text-info">
+            <p>
+              Sua estadia foi concluida, avalie o profissional.
+            </p>
+          </ion-label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="card-info">
+      <ion-card-header class="flex-start">
+        <ion-icon class="margin-right-10" size="large" color="primary" name="information-circle"></ion-icon>
+        <ion-card-subtitle>
+          Hospital escolhido
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="flex-start">
+          <!-- <ion-icon class="margin-right-10" color="primary" size="large" name="location"></ion-icon> -->
+          <ion-label class="text-info">
+            <p>
+              Local: {{estadiaDados?.nomeHospital}}.
+              <br />
+              Endereço: Cep {{estadiaDados?.endereco?.cep}} -
+              Endereço {{estadiaDados?.endereco?.endereco}}
+              {{estadiaDados?.endereco?.numero}}, Bairro {{estadiaDados?.endereco?.bairro}} <br />
+              {{estadiaDados?.endereco?.complemento}}
+            </p>
+          </ion-label>
+        </div>
+        <div class="flex-end margin-top-10">
+          <ion-chip color="primary">
+            <ion-icon name="today"></ion-icon>
+            <ion-label>
+              Inicio {{estadiaDados?.dataHora | date: 'HH:mm, dd/MM/YY '}}
+            </ion-label>
+          </ion-chip>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="card-info">
+      <ion-card-header class="flex-start">
+        <ion-icon class="margin-right-10" size="large" color="primary" name="medkit"></ion-icon>
+        <ion-card-subtitle>
+          Informações
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="flex-start">
+          <!-- <ion-icon class="margin-right-10" color="primary" size="large" name="location"></ion-icon> -->
+          <ion-label class="text-info">
+            <p>
+              Profissional {{estadiaDados?.profissional}},
+              <br />
+              {{estadiaDados?.estadia?.tipo}} -
+              {{estadiaDados?.estadia?.descricao}}
+            </p>
+          </ion-label>
+        </div>
+        <div class="flex-end margin-top-10">
+          <ion-chip color="primary">
+            <ion-icon name="time"></ion-icon>
+            <ion-label>
+              {{estadiaDados?.estadia?.tempo}}
+            </ion-label>
+          </ion-chip>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+ 
+  </div>
+
+  <!-- <ion-fab *ngIf="estadiaDados?.statusEstadia !== 'Aguardando'" slot="fixed" vertical="bottom" horizontal="end"> -->
+    <ion-fab *ngIf="estadiaDados?.statusEstadia !== 'Aguardando'" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="setOpenChat(true)">
+      <ion-icon name="chatbubbles"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-modal [isOpen]="isModalChatOpen" [initialBreakpoint]="0.65" [breakpoints]="[0, 0.65, 1]">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar class="toolbar-header">
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpenChat(false)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="margin-top">
+          <ion-card class="card-alert">
+            <ion-card-header>
+              <div>
+                <ion-icon size="large" color="primary" name="clipboard-outline"></ion-icon>
+              </div>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label class="descricao-card-alert">
+                Acompanhe aqui feedbacks do profissional
+                durante a estadia.
+              </ion-label>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <div *ngIf="mensagens?.length === 0" class="text-center margin-bottom">
+            <ion-icon size="large" color="warning" name="alert-circle"></ion-icon>
+            <ion-label>
+              <p>
+                Nenhuma mensagem foi encontrada.
+              </p>
+          </ion-label>
+        </div>
+    
+        <div *ngFor="let mensagem of mensagens">
+        <ion-card *ngIf="mensagem?.pertenceA === usuarioId"  class="card-info">
+          <ion-card-header class="flex-start">
+            <ion-icon class="margin-right-10" size="large" color="primary" name="people-circle"></ion-icon>
+            <ion-card-subtitle>
+              Você perguntou
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="flex-start">
+              <ion-icon class="margin-right-10" color="primary" size="large" name="chatbubble-ellipses"></ion-icon>
+              <ion-label class="text-info">
+                {{mensagem?.mensagem}}
+                <p>
+                  Enviado em {{mensagem?.enviadoEm}}
+                </p>
+              </ion-label>
+            </div>
+          </ion-card-content>
+        </ion-card>
+  
+        <ion-card *ngIf="mensagem?.pertenceA !== usuarioId" color="primary" class="card-info2">
+          <ion-card-header class="flex-start">
+            <ion-icon class="margin-right-10" size="large" color="light" name="person-circle"></ion-icon>
+            <ion-card-subtitle>
+              Resposta do Profissional
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="flex-start">
+              <ion-icon class="margin-right-10" color="light" size="large" name="chatbubble-ellipses"></ion-icon>
+              <ion-label color="light" class="text-info">
+                {{mensagem?.mensagem}}
+                <p>
+                  Enviado em {{mensagem?.enviadoEm}}
+                </p>
+              </ion-label>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+        <ion-footer class="ion-no-border">
+          <ion-toolbar class="footer-tool">
+            <ion-button color="primary" mode="ios" (click)="verificarStatus()"
+            class="confirm-button">
+            <!-- <ion-icon class="margin-right-10" color="light"  name="send-outline"></ion-icon> -->
+            <ion-label color="light">
+              Perguntar ao profissional
+            </ion-label>
+            <ion-icon color="light"  name="arrow-forward-circle"></ion-icon>
+          </ion-button>
+          </ion-toolbar>
+          </ion-footer>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="footer-tool">
+    <!-- *ngIf="atendimentoDados?.statusAtendimento === 'Em_Atendimento'" -->
+    <!-- (click)="confirmarAtendimentoDuploFator()" -->
+    <!-- <ion-button color="primary" mode="ios" (click)="verificarStatus()"
+      *ngIf="estadiaDados?.statusEstadia ==='Confirmado_Atendimento'"
+      class="confirm-button">
+      <ion-icon class="margin-right-10" color="light" name="checkmark-circle"> </ion-icon>
+      <ion-label color="light">
+        Verificar status Paciente
+      </ion-label>
+    </ion-button> -->
+    <ion-button
+      *ngIf="estadiaDados?.statusEstadia === 'Aguardando' ||  estadiaDados?.statusEstadia === 'Confirmado'"
+      mode="ios" color="danger" class="cancel-button" fill="clear" (click)="cancelarComMotivo(atendimentoId)">
+      <ion-icon class="margin-right-10" color="danger" name="close-circle"> </ion-icon>
+      <ion-label color="danger">
+        Cancelar
+      </ion-label>
+    </ion-button>
+
+  </ion-toolbar>
+</ion-footer>

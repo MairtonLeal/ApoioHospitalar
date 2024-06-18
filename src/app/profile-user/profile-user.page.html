@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>Minhas Informações</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tabs/tab4" routerDirection="back">
+        <ion-icon color="light" slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="sl-containerAvatar">
+    <ion-avatar>
+      <img *ngIf="meuUsuario?.fotoPerfil === ''" src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+      <img *ngIf="meuUsuario?.fotoPerfil !== ''" [src]="meuUsuario?.fotoPerfil" />
+      <ion-badge (click)="fotoPerfil()" color="sl" class="sl-camera" fill="clear">
+        <ion-icon  color="light" name="camera"></ion-icon>
+      </ion-badge>
+    </ion-avatar>
+  </div>
+  <div class="sl-form ion-padding">
+    <ion-item mode="ios" lines="none" detail="false"  class="ion-margin-bottom">
+      <ion-label position="stacked">Email  </ion-label>
+      <ion-input autocapitalize="on" disabled="true" [(ngModel)]="emailUsuario" type="text" placeholder="Nome responsável"></ion-input>
+    </ion-item>
+    <ion-item mode="ios" lines="none" detail="false"  class="ion-margin-bottom">
+      <ion-label position="stacked">Seu Nome </ion-label>
+      <ion-input autocapitalize="on" [(ngModel)]="nomeUsuario" type="text" placeholder="Nome responsável"></ion-input>
+    </ion-item>
+    <ion-item mode="ios" lines="none" detail="false" class="ion-margin-bottom">
+      <ion-label position="stacked">Nome do Paciente </ion-label>
+      <ion-input [(ngModel)]="nomePaciente" autocapitalize="on" type="text" placeholder="Nome idoso"></ion-input>
+    </ion-item>
+    <!-- <ion-item mode="ios" lines="none" detail="false" class="ion-margin-bottom">
+      <ion-label position="stacked">Sobre o Idoso </ion-label>
+      <ion-textarea [(ngModel)]="meuUsuario?.sobreIdoso" autocapitalize="on" type="text" placeholder="Nome idoso"></ion-textarea>
+    </ion-item> -->
+    <!-- <ion-item mode="ios" lines="none" detail="false" class="ion-margin-bottom">
+      <ion-label position="stacked">Idade do Idoso</ion-label>
+      <ion-input maxlength="3" [(ngModel)]="meuUsuario?.idadeIdoso" type="tel" placeholder="Idade do idoso"></ion-input>
+    </ion-item> -->
+    <ion-item mode="ios" lines="none" detail="false" class="ion-margin-bottom">
+      <ion-label position="stacked">Telefone </ion-label>
+      <ion-input  [(ngModel)]="contatoUsuario" type="text" placeholder="Contato: (91) 99999-9999"></ion-input>
+    </ion-item>
+  </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-button (click)="atualizarPerfil()" [disabled]="button" mode="md" expand="full" color="primary" class="sl-finish">
+     <ion-label>
+       Atualizar Cadastro
+      </ion-label>
+      <div style="margin-left: 10px;" *ngIf="button">
+        <ion-spinner color="light" name="crescent"></ion-spinner>
+    </div>
+    </ion-button>
+</ion-footer>

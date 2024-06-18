@@ -1,0 +1,371 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="header">
+    <ion-title style="color: #ffff"> Estadia Hospitalar </ion-title>
+    <ion-buttons *ngIf="!isLastIndex" slot="start">
+      <ion-button (click)="close()">
+        <ion-icon color="light" slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="isLastIndex" slot="start">
+      <ion-button (click)="voltarELimpar()">
+        <ion-icon color="light" slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-label class="label-step" slot="end">
+      Etapa {{indexCount}} de 4
+      <br />
+    </ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+
+  <swiper-container  #swiper [allowTouchMove]="false">
+    <swiper-slide>
+      <div class="sub-title2">
+        <strong slot="start">
+          Hospital para estadia:
+          <ion-icon *ngIf="hospitalName" style="margin-left: 8px" color="sl" name="checkmark-circle"></ion-icon>
+        </strong>
+      </div>
+
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="search" slot="start"></ion-icon>
+        <ion-searchbar search-icon="none" class="sl-search" showClearButton [(ngModel)]="autocomplete.input"
+          (ionInput)="UpdateSearchResults()" placeholder="Digite seu hospital"
+          (ionClear)="ClearAutocomplete()"></ion-searchbar>
+      </ion-item>
+
+      <ion-item lines="none" class="sl-options" [hidden]="autocompleteItems.length === 0"
+        *ngFor="let item of autocompleteItems" tappable (click)="selectNewSearchResult(item)">
+        <ion-label class="ion-text-wrap">
+          {{ item.description }}
+        </ion-label>
+        <ion-icon color="light" name="search" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item class="sl-options text" lines="none">
+        <ion-icon name="business-outline" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap"> Hospital
+          <p>
+            {{hospitalName}}
+          </p>
+          <p *ngIf="!hospitalName">
+            Encontre seu hospital desejado acima
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap"> Cidade, Estado - País
+          <p *ngIf="cityAdrress">
+            {{cityAdrress}},
+            {{stateAddress}} - {{countryAddress}}
+          </p>
+        </ion-label>
+      </ion-item>
+      <!-- <ion-item class="sl-options" lines="none">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label position="stacked"> Cep do Endereço </ion-label>
+        <ion-input enterkeyhint="next" maxlength="8" [(ngModel)]="cepCode"  type="tel"
+          placeholder="0000-000"></ion-input>
+      </ion-item>
+
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label position="stacked"> Seu endereço </ion-label>
+        <ion-input enterkeyhint="next"  [(ngModel)]="locateAdress" type="text"
+          placeholder="Endereço: rua reduto"></ion-input>
+      </ion-item>
+
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label position="stacked"> Seu Nº </ion-label>
+        <ion-input  enterkeyhint="done" [(ngModel)]="numberAdress" type="tel"
+          placeholder="Nº 00"></ion-input>
+      </ion-item>
+
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label position="stacked"> Seu bairro </ion-label>
+        <ion-input  enterkeyhint="next" [(ngModel)]="districtAdress" type="text"
+          placeholder="Bairro: Reduto"></ion-input>
+      </ion-item> -->
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label position="stacked"> Seu complemento </ion-label>
+        <ion-input enterkeyhint="done" [(ngModel)]="complementAdress" type="text"
+          placeholder="(opcional) Ex: proximo ao posto"></ion-input>
+      </ion-item>
+
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="information-outline" slot="start"></ion-icon>
+        <ion-label position="stacked"> Ponto de encontro </ion-label>
+        <ion-input enterkeyhint="done" [(ngModel)]="pontoDeEncontro" type="text"
+          placeholder="Em frente ao hospital"></ion-input>
+      </ion-item>
+
+      <div class="sub-title2">
+        <strong slot="start">
+          Estadia para:
+          <ion-icon *ngIf="dataHora !== undefined" style="margin-left: 8px" color="sl" name="checkmark-circle"></ion-icon>
+        </strong>
+      </div>
+      <ion-datetime  class="data" [min]="minDate" [(ngModel)]="dataHora" presentation="date-time" [preferWheel]="true"
+        color="primary" mode="md" [showDefaultButtons]="true" #datetime>
+        <span class="title-hour" slot="title">
+          Data e Hora: {{dataHora | date : "dd/MM/y HH:mm a"}}
+        </span>
+        <ion-buttons slot="buttons">
+          <ion-button color="danger" (click)="datetime.reset()">Limpar</ion-button>
+          <ion-button color="primary" (click)="datetime.confirm()">Confirmar</ion-button>
+        </ion-buttons>
+      </ion-datetime>
+
+    </swiper-slide>
+    <swiper-slide>
+      <div class="sub-title2">
+        <strong slot="start">
+            Na Estadia:
+          <ion-icon *ngIf="beneficioPagamento !== undefined" style="margin-left: 8px" color="sl" name="checkmark-circle"></ion-icon>
+        </strong>
+      </div>
+      <ion-item  class="sl-options" lines="none">
+        <ion-icon name="card" slot="start"></ion-icon>
+        <ion-select 
+        label-placement="stacked" 
+        label="Você deseja ofercer alguma alimentação?"
+        [(ngModel)]="beneficioPagamento" mode="md" interface="action-sheet" value="DINHEIRO"
+          cancelText="Cancelar" okText="OK">
+          <ion-select-option value="Almoço/Janta">Almoço/Janta</ion-select-option>
+          <ion-select-option value="Lanche">Lanche</ion-select-option>
+          <ion-select-option value="Outro">
+           Contribuirei de outra forma
+          </ion-select-option>
+          <ion-select-option value="Não">
+            Não irei ofereçer. 
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div class="sub-title2">
+        <strong slot="start">
+           Sobre Pagamento
+          <ion-icon *ngIf="formaDePagamento !== undefined" style="margin-left: 8px" color="sl" name="checkmark-circle"></ion-icon>
+        </strong>
+      </div>
+    
+
+      <!-- <div class="sub-title2">
+        <strong slot="start">
+          Forma de Pagamento:
+          <ion-icon *ngIf="formaDePagamento !== undefined" style="margin-left: 8px" color="sl" name="checkmark-circle"></ion-icon>
+        </strong>
+      </div> -->
+      <ion-item class="sl-options" lines="none">
+        <ion-icon name="card" slot="start"></ion-icon>
+        <ion-label position="stacked">  </ion-label>
+        <ion-select label-placement="stacked" 
+        label="Escolha Forma de Pagamento" mode="md" [(ngModel)]="formaDePagamento" interface="action-sheet" value="DINHEIRO"
+          cancelText="Cancelar" okText="OK">
+          <ion-select-option value="DINHEIRO">Dinheiro</ion-select-option>
+          <ion-select-option value="PIX">Pix</ion-select-option>
+          <ion-select-option value="debito">Cartão de Debito</ion-select-option>
+          <ion-select-option value="crédito">Cartão de Credito</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div class="sub-title2">
+        <strong slot="start"> Escolha seu tipo: </strong>
+        <ion-icon *ngIf="planoSelecionado !== undefined" style="margin-left: 8px" color="sl" name="checkmark-circle"></ion-icon>
+      </div>
+      <div *ngFor="let plano of periodos">
+        <ion-card [color]="planoSelecionado?.id === plano?.id ? 'sl' : ''" (click)="escolherPlano(plano)" button
+          class="card-planos">
+          <ion-card-header class="flex-left">
+            <ion-icon [color]="planoSelecionado?.id === plano?.id ? 'light' : 'sl'" size="large" color="sl"
+              [name]="planoSelecionado?.id === plano?.id ?   'checkmark-circle' : 'radio-button-off'"></ion-icon>
+            <ion-card-title class="margin-left-10">
+              <strong> {{plano?.tipo}} </strong>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>
+              {{plano?.descricao}}
+              <p class="descricao">{{plano?.tempo }}</p>
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class="sub-title2">
+        <strong slot="start">
+          Tipo de estadia:
+        </strong>
+      </div>
+      <ion-item  *ngFor="let item of itemsAvaliacao" class="sl-options" lines="none">
+        <ion-icon name="list-outline" slot="start"></ion-icon>
+        <ion-checkbox legacy="true" [(ngModel)]="item.checked" justify="space-between">
+          <ion-label class="ion-text-wrap">
+            {{item.nome}}
+            <p>
+              {{item.descricao}}
+  
+            </p>
+          </ion-label>
+        </ion-checkbox>
+      </ion-item>
+    </swiper-slide>
+    <swiper-slide>
+      <div class="sub-title2">
+        <strong slot="start">
+          Revise os dados:
+        </strong>
+      </div>
+      <ion-card class="card-revisao">
+        <ion-card-header class="text-left">
+          <ion-card-title>
+            Total R$
+             <ion-label color="success">
+              {{valorTotalEstadia}}
+            </ion-label>
+          </ion-card-title>
+          <ion-card-subtitle>
+            Forma de pagamento: {{formaDePagamento}}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="text-left">
+          <ion-icon size="large" name="cash"></ion-icon>
+          <div class="flex-left">
+            <div>
+              <ion-label>
+                Atendimento:  {{planoSelecionado?.valor | currency: 'BRL'}}  
+                <p>
+                  Taxa do aplicativo: R$ 9,99
+                </p>
+              </ion-label>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="card-revisao">
+        <ion-card-header class="text-left">
+          <ion-card-title>
+            Profissional
+          </ion-card-title>
+          <ion-card-subtitle>
+            {{profissionalSelecionado?.nomeUser}}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="text-left">
+          <ion-icon size="large" name="id-card"></ion-icon>
+          <div class="flex-left">
+            <div>
+              <ion-label>
+                Estadia em: {{hospitalName}},
+                <p>
+                  localizado em {{cityAdrress}},
+                  {{stateAddress}} - {{countryAddress}}
+                </p>
+              </ion-label>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="card-revisao">
+        <ion-card-header class="text-left">
+          <ion-card-title>
+            Atendimento
+          </ion-card-title>
+          <ion-card-subtitle>
+            Descrição
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="text-left">
+          <ion-icon size="large" name="medkit"></ion-icon>
+          <div class="flex-left">
+            <div *ngIf="!beneficioPagamento || beneficioPagamento === 'Não'">
+              <ion-label>
+                {{planoSelecionado?.tipo}},
+                {{planoSelecionado?.descricao}}
+                <p>
+                  {{planoSelecionado?.tempo}}
+
+                </p>
+              </ion-label>
+            </div>
+            <div *ngIf="!beneficioPagamento || beneficioPagamento !== 'Não'">
+              <ion-label>
+                Vou contribuir tambem com {{beneficioPagamento}}
+                {{planoSelecionado?.tipo}},
+                {{planoSelecionado?.descricao}}
+                <p>
+                  {{planoSelecionado?.tempo}}
+
+                </p>
+              </ion-label>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="card-revisao">
+        <ion-card-header class="text-left">
+          <ion-card-title>
+            Estadia do paciente
+          </ion-card-title>
+          <ion-card-subtitle>
+            Opções selecionadas
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="text-left">
+          <ion-icon size="large" name="fitness"></ion-icon>
+          <div>
+            <div *ngFor="let item of itemsAvaliacao">
+              <ion-label *ngIf="item.checked === true">
+                <p>
+                  {{item.nome}}
+                </p>
+              </ion-label>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </swiper-slide>
+
+  </swiper-container>
+</ion-content>
+<ion-footer *ngIf="!mostrarPagar" class="ion-no-border">
+  <ion-toolbar style="padding: 0" color="light" mode="md">
+    <ion-button class="sl-pay" color="sl" *ngIf="!slideIndex" expand="full" [disabled]="button" (click)="next()">
+      <ion-label> Proximo </ion-label>
+      <ion-icon color="light" name="chevron-forward"></ion-icon>
+    </ion-button>
+
+    <ion-button class="sl-pay" color="sl" expand="full" *ngIf="slideIndex && !mostrarPagar" slot="end" (click)="next()">
+      <ion-label> Avançar </ion-label>
+      <ion-icon color="light" name="chevron-forward"></ion-icon>
+    </ion-button>
+    <ion-button class="sl-pay" color="sl" expand="full" *ngIf="slideIndex" slot="start" (click)="prev()">
+      <ion-icon color="light" name="chevron-back"></ion-icon>
+      <ion-label> Voltar </ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+<ion-footer *ngIf="mostrarPagar" class="ion-no-border">
+  <!-- <div class="white-bg">
+    <ion-label color="sl" class="sl-label2">
+      Total a pagar:
+      <p class="sl-p">{{(valorCuidadoAss * diasDeServico) | currency: 'BRL'}}</p>
+    </ion-label>
+  </div> -->
+  <ion-toolbar style="padding: 0" color="light" mode="md">
+    <ion-button class="sl-pay" color="sl" *ngIf="mostrarPagar" expand="full" (click)="solicitarAtendimento()"
+      [disabled]="button">
+      <ion-label> Solicitar </ion-label>
+      <ion-icon color="light" name="checkmark"></ion-icon>
+      <ion-spinner *ngIf="button" style="margin-left: 8px" color="light" name="crescent"></ion-spinner>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

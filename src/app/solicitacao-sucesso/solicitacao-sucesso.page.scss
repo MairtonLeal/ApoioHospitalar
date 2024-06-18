@@ -1,0 +1,64 @@
+.label-title{
+    font-size: 25px;
+    font-weight: 300;
+    line-height: 70px;
+  }
+
+  .label-title2{
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 40px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .label-description{
+    font-size: 16px;
+    color: var(--ion-color-medium);
+  }
+
+  .div-padding2{
+    padding: 5px;
+    margin-bottom: 100px;
+  }
+
+  .container-onboard{
+    margin-top: 10rem;
+  }
+
+  .size-icon{
+    font-size: 100px;
+    // border: 1px solid;
+    border-radius: 60px;
+    box-shadow:rgba(0, 0, 0, 0.12) 0px 4px 16px;
+    margin-bottom: 10px;
+  }
+
+  .adicionarAlagamento1 {
+    height: 55px;
+    display: flex;
+    text-transform: none;
+    --border-radius: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    width: 50%;
+    --box-shadow: none;
+  }
+
+  .footer-floating2{
+    position: fixed;
+    bottom: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+
+  .button-float2{
+    height: 52px;
+    width: 90%;
+    text-transform: none;
+    --border-radius: 10px;
+    --box-shadow: 8px 4px 25px 0px rgba(0, 0, 0, 0.08);
+  }

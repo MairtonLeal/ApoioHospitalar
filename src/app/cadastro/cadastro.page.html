@@ -1,0 +1,77 @@
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="sl" routerLink="/login" routerDirection="back" color="sl">
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="sl">Cadastre-se</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="sl-form ion-padding">
+    <div class="sl-containerAvatar">
+      <ion-avatar (click)="fotoPerfil()">
+        <img *ngIf="!exibirFoto" class="foto-img"
+          src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+        <img *ngIf="exibirFoto" class="foto-img" [src]="exibirFoto" />
+        <ion-badge (click)="fotoPerfil()" color="sl" class="sl-camera" fill="clear">
+          <ion-icon color="light" name="camera"></ion-icon>
+        </ion-badge>
+      </ion-avatar>
+    </div>
+  </div>
+  <div class="sl-form ion-padding">
+    <form [formGroup]="signupform" novalidate>
+      <ion-item lines="none" class="ion-margin-bottom">
+        <ion-input formControlName="useremail" type="email" placeholder="Informe seu e-mail"></ion-input>
+      </ion-item>
+      <ion-item lines="none" class="ion-margin-bottom">
+        <ion-input placeholder="Informe sua senha" [type]="mostrarSenha ?
+          'password' : 'text'" formControlName="userpass" required></ion-input>
+        <ion-icon color="sl" [name]="mostrarSenha ? 'eye-outline' :
+          'eye-off-outline'" class="go-senha" slot="end" (click)="mostrarSenha=
+          !mostrarSenha">
+        </ion-icon>
+      </ion-item>
+    </form>
+  </div>
+  <div class="sl-form ion-padding">
+    <ion-item lines="none" class="ion-margin-bottom">
+      <ion-input autocapitalize="on" [(ngModel)]="nameResp" type="text" placeholder="Nome responsável"></ion-input>
+    </ion-item>
+    <!-- <ion-item lines="none" class="ion-margin-bottom">
+      <ion-input [(ngModel)]="nomeIdoso" autocapitalize="on" type="text" placeholder="Nome idoso"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="ion-margin-bottom">
+      <ion-input maxlength="3" [(ngModel)]="idadeIdoso" type="tel" placeholder="Idade do idoso"></ion-input>
+    </ion-item> -->
+    <ion-item lines="none" class="ion-margin-bottom">
+      <ion-input [(ngModel)]="telefone"  type="tel"
+        placeholder="Contato: (91) 99999-9999"></ion-input>
+    </ion-item>
+    <!-- <ion-item lines="none" class="ion-margin-bottom">
+      <ion-textarea [(ngModel)]="sobreIdoso" autocapitalize="on" type="text"
+        placeholder="Sobre o idoso (opcional)"></ion-textarea>
+    </ion-item> -->
+  </div>
+
+  <div href="https://politicasdeprivacidadesollow.blogspot.com/2023/05/politicas-de-privacidade.html">
+    <p>
+      Clicando em cadastrar você concorda com <br />nossos
+      <a> Termos de uso </a>
+      e
+      <a> Politicas de Privacidade. </a>
+    </p>
+  </div>
+  <div class="sl-finish ion-padding">
+    <ion-button mode="ios" [disabled]="!signupform.valid || button" (click)="doSignup()" class="sl-signUP" color="sl"
+      expand="block">
+      <ion-label color="light"> Cadastrar </ion-label>
+      <div style="margin-left: 10px" *ngIf="button">
+        <ion-spinner color="light" name="crescent"></ion-spinner>
+      </div>
+    </ion-button>
+  </div>
+</ion-content>

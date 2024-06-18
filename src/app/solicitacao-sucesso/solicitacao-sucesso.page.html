@@ -1,0 +1,33 @@
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="container-onboard text-center">
+    <div class="div-margin-bottom">
+      <div>
+        <!-- <ion-icon name="checkmark-circle-outline" color="success" class="size-icon"></ion-icon> -->
+        <img src="assets/solicitacao-concluida.svg" />
+      </div>
+      <br />
+      <ion-label color="primary" class="label-title2">
+        Solicitação enviada com sucesso !
+      </ion-label>
+      <br />
+      <ion-label class="label-description">
+       Notificamos o profissional 
+       Aguarde e acompanhe em 
+       <strong>
+        Atendimentos 
+        </strong>
+        sua solicitação
+      </ion-label>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="ion-no-border div-padding footer-floating2">
+  <ion-button (click)="fechar()" color="primary"  expand="block" class="button-float2">
+    <ion-label color="light"> 
+     <strong>
+       Concluir  
+      </strong>
+    </ion-label>
+  </ion-button>
+
+</ion-footer>

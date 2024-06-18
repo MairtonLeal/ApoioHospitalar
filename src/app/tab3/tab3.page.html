@@ -1,17 +1,101 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar class=" header">
+      <ion-button  mode="md" slot="end" (click)="atualizarPagina()" fill="clear">
+          <ion-icon size="large" color="primary" name="refresh-circle"></ion-icon>
+      </ion-button>
+      <ion-title>Meu Idoso</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div *ngIf="carregando" style="display: flex; justify-content: center;
+  margin-top: 30px;">
+      <ion-label style="text-align: center;" color="sl">
+          Carregando... <br />
+          <ion-spinner color="primary" name="crescent"></ion-spinner>
+      </ion-label>
+  </div>
+  <div *ngIf="!carregando">
+    <ion-card mode="ios">
+      <ion-card-header class="info-header">
+        <img class="img-aviso" src="assets/remedios.png" alt="servicos" />
+        <ion-card-content style="padding: 5px;">
+          <p>
+          Ferramentas para organizar horários de
+              <strong>medicamentos </strong> e um diário para acompanhar a <strong> evolução do idoso </strong>
+          </p>
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
-</ion-content>
+    <div class="sub-title">
+      <strong slot="start">
+        Hórario de Remédios
+        </strong>
+        <ion-button  (click)="addLembrete()" mode="md" fill="clear">
+          <ion-icon size="large" name="add-circle" color="primary"></ion-icon>
+        </ion-button>
+    </div>
+
+    <swiper-container class="sub-title">
+      <swiper-slide *ngFor="let lembrete of lembretes">
+        <ion-card mode="ios" color="primary" class="avisos">
+          <ion-card-header
+            style="padding: 10px; display: flex; align-items: center; justify-content: space-between">
+              <ion-card-subtitle> {{lembrete?.nome}} </ion-card-subtitle>
+
+            </ion-card-header>
+            <ion-card-content style="padding: 2px">
+              <ion-card-title> {{lembrete?.horario}} </ion-card-title>
+              <p>{{lembrete?.descricao}}</p>
+            </ion-card-content>
+
+
+              <ion-button mode="ios"  (click)="removerLembrete(lembrete?.id)" class="rm-horario" color="danger" expand="full">
+                <ion-label>
+                  Remover Horário
+                </ion-label>
+              </ion-button>
+
+        </ion-card>
+      </swiper-slide>
+    </swiper-container>
+
+    <div class="sub-title">
+      <strong slot="start">
+         Evolução do idoso
+        </strong>
+        <ion-button  (click)="addEvolucao()" mode="md" fill="clear">
+          <ion-icon size="large" name="add-circle" color="primary"></ion-icon>
+        </ion-button>
+    </div>
+
+    <div class="scroll-horizontal">
+      <ion-card *ngFor="let evolucao of evolucoes"  mode="ios" color="primary" class="evolucoes">
+        <ion-card-header class="padding:0">
+            <ion-card-title style="font-size: 20px;"> {{evolucao?.nome}} </ion-card-title>
+            <!-- <ion-button (click)="removerEvolucao(evolucao?.id)" class="close" mode="md" fill="clear">
+              <ion-icon   color="danger"  name="close-circle"></ion-icon>
+            </ion-button> -->
+        </ion-card-header>
+        <ion-card-content style="padding: 10px">
+          <ion-text>
+            {{evolucao?.descricao}}
+          </ion-text>
+        </ion-card-content>
+       <ion-toolbar color="primary" class="data-reg">
+         <p style="font-size: 12px; text-align: center;">
+          Data do registro  {{evolucao?.dataRegistro | date: 'dd/MM/YYYY, HH:mm'}}
+        </p>
+      </ion-toolbar>
+      <ion-button mode="ios" (click)="removerEvolucao(evolucao?.id)" class="rm-horario" color="danger" expand="full">
+        <ion-label>
+          Remover evolução
+        </ion-label>
+      </ion-button>
+
+      </ion-card>
+
+    </div>
+  </div>
+  </ion-content>

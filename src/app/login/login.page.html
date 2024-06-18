@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border">
+  <div class="login-header ion-padding">
+    <img class="logo-img" src="assets/sollow.png" />
+  </div>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <div id="header">
+    <h1>
+      Login para acesso
+    </h1>
+</div>
+<form [formGroup]="loginForm" novalidate>
+  <ion-item mode="ios" lines="none" class="ion-margin-bottom">
+    <ion-input type="email" clearInput="true" formControlName="useremail" placeholder="Informe seu e-mail"></ion-input>
+  </ion-item>
+  <ion-item mode="ios" lines="none" class="ion-margin-bottom">
+    <ion-input  placeholder="Informe sua senha"  [type]="mostrarSenha ? 'password' : 'text'"
+    formControlName="userpass" required></ion-input>
+    <ion-icon color="sl" [name]="mostrarSenha ? 'eye-outline' : 'eye-off-outline'" class="go-senha" slot="end" (click)="mostrarSenha = !mostrarSenha"> </ion-icon>
+  </ion-item>
+</form>
+    <p>Esqueceu a senha ?
+    <a (click)="reset()">
+      Clique aqui
+    </a>
+    </p>
+    <ion-button mode="ios" [disabled]="!loginForm.valid || button" (click)="doLogin()" class="sl-logged" color="sl" expand="block" shape="round">
+      <ion-label color="light">
+        Entrar
+    </ion-label>
+    <div style="margin-left: 10px;" *ngIf="button">
+        <ion-spinner color="light" name="crescent"></ion-spinner>
+    </div>
+    </ion-button>
+    <ion-button mode="ios" routerLink="/cadastro"  class="sl-signup-clear" expand="block" fill="clear">
+      <ion-label>
+       Ainda Não tem cadastro ? 
+       <strong> 
+        Cadastre-se
+        </strong>
+      </ion-label>
+    </ion-button>
+
+
+</ion-content>

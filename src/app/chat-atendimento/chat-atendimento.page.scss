@@ -1,0 +1,29 @@
+.header {
+  --background: #f1f5f8;
+  ion-title {
+      font-size: 18px;
+      color: var(--ion-color-primary);
+  }
+
+}
+
+.msg-enviada{
+  width: 60%;
+}
+
+.msg-position{
+  display: flex;
+  justify-content: flex-end;
+}
+
+ion-content {
+  // --padding-top: 16px;
+  // --padding-bottom: 16px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --background: #f1f5f8;
+}
+
+ion-item{
+  --min-height:70px;
+}

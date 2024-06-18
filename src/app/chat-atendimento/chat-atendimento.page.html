@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header">
+    <ion-title>
+      Chat Atendimento
+    </ion-title>
+    <ion-button (click)="fechar()" fill="clear" slot="end">
+      <ion-icon  name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card style="margin: 0;" mode="ios" color="primary">
+<ion-card-header>
+  <ion-card-subtitle style="color:white">
+    Atenção sobre o chat de atendimento!
+  </ion-card-subtitle>
+</ion-card-header>
+
+<ion-card-content>
+  <ion-text color="light">
+    Após o fechamento do atendimento, as mensagens não serão mantidas.
+  </ion-text>
+</ion-card-content>
+</ion-card>
+<div *ngFor="let msgEnviada of mensagens" class="msg-position">
+  <ion-card *ngIf="msgEnviada?.pertenceA === usuarioId"  color="primary" class="msg-enviada" mode="ios">
+    <ion-card-content style="padding: 10px;">
+     <ion-label>
+      Você:{{msgEnviada?.mensagem}}
+      <p style="font-size: 12px;">
+         enviou em: {{msgEnviada?.enviandoEm}}
+         </p>
+       </ion-label>
+     </ion-card-content>
+   </ion-card>
+   <ion-card *ngIf="msgEnviada?.pertenceA !== usuarioId"  class="msg-enviada" mode="ios">
+    <ion-card-content style="padding: 10px;">
+       <ion-label>
+         {{msgEnviada?.enviadoPor}} enviou: {{msgEnviada?.mensagem}}
+          <p style="font-size: 12px;">
+          enviado em:{{msgEnviada?.enviandoEm}}
+           </p>
+         </ion-label>
+     </ion-card-content>
+   </ion-card>
+
+</div>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-item mode="ios" detail="false" lines="none">
+    <ion-input placeholder="Digite sua mensagem" [(ngModel)]="mensagem">
+    </ion-input>
+    <ion-button (click)="enviarMensagemProf()" fill="clear" slot="end">
+      <ion-icon color="primary" name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>

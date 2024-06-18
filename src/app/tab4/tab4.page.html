@@ -1,0 +1,47 @@
+<ion-content>
+  <div class="default-top-padding title">
+    <h2>Perfil</h2>
+    <!-- <p>{{dateToday}}</p> -->
+    <p>Versão 1.0.0</p>
+  </div>
+  <div>
+    <ion-list class="sl-list">
+      <ion-item (click)="atualizarDados()" mode="ios" detail="false" button lines="none">
+        <ion-icon slot="start" color="sl" name="person-circle"></ion-icon>
+        <ion-label> Minhas informações </ion-label>
+      </ion-item>
+      <ion-item (click)="historico()" mode="ios" detail="false" button lines="none">
+        <ion-icon slot="start" color="sl" name="bookmarks"></ion-icon>
+        <ion-label> Histórico </ion-label>
+      </ion-item>
+      <ion-item (click)="entrarEmContato()" mode="ios" detail="false" button lines="none">
+        <ion-icon slot="start" color="sl" name="help-circle"></ion-icon>
+        <ion-label> Suporte e Informações </ion-label>
+      </ion-item>
+      <ion-item href="https://politicasdeprivacidadesollow.blogspot.com/2023/05/politicas-de-privacidade.html"
+        mode="ios" detail="false" button lines="none">
+        <ion-icon slot="start" color="sl" name="document"></ion-icon>
+        <ion-label> Termos de uso e <br />Politicas de privacidade </ion-label>
+      </ion-item>
+      <ion-item (click)="sair()" mode="ios" detail="false" button lines="none">
+        <ion-icon slot="start" color="sl" name="log-out"></ion-icon>
+        <ion-label> Sair </ion-label>
+      </ion-item>
+    </ion-list>
+    <!-- <ion-card class="card-alert">
+      <ion-card-header>
+        <ion-icon color="primary" name="ribbon"></ion-icon>
+        <ion-label class="descricao">
+        <br />
+        Deseja indicar alguem na plataforma ?
+        clique no link:
+        <br />
+        <a>
+          <ion-icon name="link-outline"></ion-icon>
+          Indicar profissional na Sollow
+        </a>
+        </ion-label>
+      </ion-card-header>
+    </ion-card> -->
+  </div>
+</ion-content>

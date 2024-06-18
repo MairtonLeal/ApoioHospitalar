@@ -1,1 +1,38 @@
+ion-tab-bar {
+    bottom: 20px;
+    position: relative;
+    border-radius: 16px;
+    width: 92%;
+    margin: 0 auto;
+    // --background: #f1f5f8;
+    // --background: #f0f2f5;
+     --background: #fff;
 
+  }
+  
+  ion-tab-button {
+    --color: var(--ion-color-medium);
+    --color-selected: var(--ion-color-sl);
+
+    ion-icon{
+      font-size: 24px;
+    }
+  
+    &::before {
+      background-color: transparent;
+      display: block;
+      content: "";
+      margin: 0 auto;
+      width: 20px;
+      height: 2px;
+    }
+  
+    &.tab-selected::before {
+      background-color: var(--ion-color-sl);
+    }
+  }
+
+  ion-tabs{
+    // background: #ffff;
+    background: #f1f5f8;
+  }

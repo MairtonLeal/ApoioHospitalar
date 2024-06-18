@@ -1,0 +1,280 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="header">
+    <ion-button mode="md" slot="start" routerLink="/tabs/tab4" routerDirection="back" fill="clear">
+      <ion-icon color="light" name="chevron-back"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" slot="end" (click)="atualizarPagina()" fill="clear">
+      <ion-icon size="large" color="light" name="refresh-circle"></ion-icon>
+    </ion-button>
+    <ion-title color="light">Histórico</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="carregando" style="display: flex; justify-content: center;
+    margin-top: 30px;">
+    <ion-label style="text-align: center;" color="sl">
+      Carregando... <br />
+      <ion-spinner color="primary" name="crescent"></ion-spinner>
+
+    </ion-label>
+  </div>
+  <div *ngIf="!carregando">
+    <div *ngFor="let estadia of estadias" class="order-items">
+      <ion-card *ngIf="estadia" mode="ios" color="sl">
+        <ion-card-header>
+          <!-- <ion-card-title>
+            Estadia {{estadia?.valor | currency: 'BRL'}}
+          </ion-card-title> -->
+          <div class="flex-between">
+            <div>
+              <ion-avatar>
+                <img *ngIf="estadia.foto === ''"
+                  src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+                <img *ngIf="estadia.foto !== ''" [src]="estadia?.foto" />
+              </ion-avatar>
+              <ion-label style="white-space: nowrap;">
+                {{estadia?.profissional}}
+                <p style="white-space: pre;font-size: 12px;">
+                  {{estadia?.profissao}}
+                </p>
+              </ion-label>
+            </div>
+            <ion-card-subtitle *ngIf="estadia?.status
+            === 'Arquivado'" color="light">
+              Concluido e Avaliado
+            </ion-card-subtitle>
+            <ion-card-subtitle *ngIf="estadia?.status
+          === 'Concluido'" color="light">
+              Concluido
+            </ion-card-subtitle>
+            <ion-card-subtitle *ngIf="estadia?.status
+            === 'Cancelado'" color="danger">
+              Cancelado
+            </ion-card-subtitle>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="item-info">
+            <ion-label color="light">
+              <strong>
+                Informações:
+              </strong>
+              <p style="white-space: pre-linee;font-size: 12px; color: f1f5f8;">
+                Valor: {{estadia?.valor | currency: 'BRL'}}
+                <br />
+                Estadia: {{estadia?.estadia.tipo}}
+                <br />
+                Periodo: {{estadia?.estadia.tempo}}
+              </p>
+            </ion-label>
+          </div>
+        </ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div>
+                <ion-label color="light">
+                  <strong>
+                    Endereço
+                  </strong>
+                  <p>
+                    {{estadia?.nomeHospital}}
+
+                  </p>
+                </ion-label>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-label color="light">
+                  <strong>
+                    Realizado em: {{estadia?.dataHora | date : "dd/MM/y HH:mm"}}
+                  </strong>
+                  <p>
+                    {{estadia?.formaPagamento}}
+                  </p>
+                  <br />
+                  <p>
+                    {{estadia?.tempo}}
+                  </p>
+                </ion-label>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+    <!-- estadias -->
+    <!-- <ion-segment [(ngModel)]="tipoItem" value="pagamentos">
+      <ion-segment-button value="servicos">
+        <ion-label>
+          Serviços básicos
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="cuidados">
+        <ion-label>
+          Atendimentos
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment> -->
+    <!-- Modelo -->
+
+    <!-- <div *ngIf="tipoItem === 'servicos'">
+      <div *ngFor="let servico of servicos" class="order-items">
+        <div *ngIf="servico?.historico === false" style="text-align: center;">
+          <div style="display: flex; justify-content: center;">
+            <img style="height: 180px;width: 180px;"
+              src="assets/naoEncontrado.svg" />
+          </div>
+          <ion-label>
+            Nenhum Histórico encontrado
+          </ion-label>
+        </div>
+        <ion-card *ngIf="servico?.historico === true" mode="ios" button
+          color="primary" mode="ios">
+          <ion-card-content>
+            <div class="item-img">
+              <div>
+                <img *ngIf="servico.foto === ''"
+                  src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                  />
+                <img *ngIf="servico.foto !== ''" [src]="servico?.foto" />
+                <ion-label style="white-space: nowrap;">
+                  {{servico?.nome}}
+                  <p style="white-space: pre;font-size: 12px;">
+                    {{servico?.profissao}}
+                  </p>
+                </ion-label>
+              </div>
+            </div>
+            <div class="item-info">
+              <p>
+
+              </p>
+              <p>  {{servico?.dataHora | date : "dd/MM/y HH:mm"}}</p>
+              <p>
+                {{servico?.valor | currency: 'BRL'}}
+              </p>
+              <ion-card-subtitle  *ngIf="servico?.status === 'Concluido'" color="light">{{servico?.status}}</ion-card-subtitle>
+              <ion-card-subtitle  *ngIf="servico?.status === 'Cancelado'">
+                {{servico?.status}}
+              </ion-card-subtitle>
+              <p *ngIf="servico?.motivo">
+              motivo: {{servico?.motivo}}
+              </p>
+
+              <ion-progress-bar *ngIf="servico?.status === 'Concluido'"
+                buffer="1" value="1" color="light"></ion-progress-bar>
+              <ion-progress-bar *ngIf="servico?.status === 'Cancelado'"
+                buffer="1" value="1" color="danger"></ion-progress-bar>
+            </div>
+          </ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div>
+                  <ion-label color="light">
+                    Detalhes do Endereço
+                    <p>
+                      {{servico?.endereco.endereco}} <br />
+                      {{servico?.endereco.bairro}} <br />
+                      {{servico?.endereco.numero}} <br />
+                    </p>
+                  </ion-label>
+
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class="">
+                  <ion-label color="light">
+                    Detalhes do Serviço
+                    <p>
+                      {{servico?.procedimento}} - Valor
+                      {{servico?.valor | currency: 'BRL'}} <br />
+                      {{servico?.data | date : "dd/MM/y HH:mm"}} <br />
+                    </p>
+                  </ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <div *ngIf="servico?.status !== 'Cancelado'" style="display: flex;
+            justify-content: flex-end; align-items: center; margin: 5px;">
+
+          </div>
+        </ion-card>
+      </div>
+    </div> -->
+    <!-- <div *ngIf="tipoItem === 'cuidados'">
+      <div *ngFor="let atendimento of historicoAtendimentos"
+        class="order-items">
+        <ion-card *ngIf="atendimento" mode="ios" button color="sl">
+          <ion-card-header>
+            <ion-card-title>
+              {{atendimento?.cuidado | currency: 'BRL'}}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="item-info">
+              <ion-label color="light">
+                Data e Hora:
+                <p style="white-space: pre-linee;font-size: 12px; color:white">
+                  {{atendimento?.data | date : "dd/MM/y HH:mm"}}
+                </p>
+              </ion-label>
+              <br />
+              <ion-card-subtitle *ngIf="atendimento?.status
+                === 'Concluido'" color="light">
+                Concluido
+              </ion-card-subtitle>
+              <ion-card-subtitle *ngIf="atendimento?.status
+                === 'Cancelado'" color="danger">
+                Cancelado
+              </ion-card-subtitle>
+
+              <ion-progress-bar *ngIf="atendimento?.status === 'Concluido'"
+                buffer="1" value="1" color="light"></ion-progress-bar>
+              <ion-progress-bar *ngIf="atendimento?.status === 'Cancelado'"
+                buffer="1" value="1" color="danger"></ion-progress-bar>
+            </div>
+          </ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div>
+                  <ion-label color="light">
+                    <strong>
+                      Endereço
+                    </strong>
+                    <p>
+                      {{atendimento?.endereco.endereco}} <br />
+                      {{atendimento?.endereco.bairro}} <br />
+                      {{atendimento?.endereco.numero}} <br />
+                    </p>
+                  </ion-label>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div>
+                  <ion-label color="light">
+                    <strong>
+                      Tipo: {{atendimento?.tipo}}
+                    </strong>
+                    <p>
+                      {{atendimento?.pagamento}} {{atendimento?.valor | currency: 'BRL'}}
+                      </p>
+                      <br />
+                    <p>
+                      {{atendimento?.obs}} <br />
+                    </p>
+                  </ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </div>
+    </div> -->
+  </div>
+</ion-content>

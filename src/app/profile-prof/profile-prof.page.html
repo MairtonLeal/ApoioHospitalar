@@ -1,0 +1,196 @@
+<!---->
+
+<ion-content>
+  <ion-header mode="md" class="ion-no-border">
+    <ion-toolbar class="toolbar-content">
+      <ion-buttons slot="start">
+        <ion-button (click)="close()">
+          <ion-icon color="sl" slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <div id="profile-info">
+    <img id="profile-image" *ngIf="profissional?.fotoPerfil !== ''"
+      [src]="profissional?.fotoPerfil" />
+    <img id="profile-image" *ngIf="profissional?.fotoPerfil === ''"
+      src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+      />
+      <h3 id="profile-name">{{profissional?.nomeUser}}</h3>
+    <span id="profile-description"> {{profissional?.profissao}} </span>
+  </div>
+<!-- <div class="habilidades">
+  <ion-chip *ngFor="let habilidades of profissional?.habilidades" color="primary">
+    <ion-label>
+      {{habilidades}}
+    </ion-label>
+  </ion-chip>
+</div> -->
+  <div class="div-descricao">
+    <span class="text-descricao">
+      <!-- Sou formada a pouco tempo, trabalho com idosos acamados a mais de 3 anos. -->
+      Atenção as informações e para iniciar sua solicitação comigo basta clicar em
+     <strong>
+      Iniciar atendimento
+     </strong>
+    </span>
+  </div>
+  <!-- <div class="flex-start">
+    <ion-card  button color="primary" class="card-indicador">
+      <ion-card-header>
+        Registro Coren
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>
+         Ativo
+        </ion-label>
+      
+      </ion-card-content>
+    </ion-card>
+    <ion-card button class="card-indicador">
+      <ion-card-header>
+        Experiência <br/>
+        Profissional
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label class="label-afericao">
+          <p>
+            Tempo 
+          </p>
+          1 Ano
+        </ion-label>
+      
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card  button class="card-indicador">
+      <ion-card-header>
+        Atendimentos 
+        <br />
+        Realizados
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label class="label-afericao">
+          <p>
+            Quantidade
+          </p>
+          18 pacientes
+        </ion-label>
+    
+      </ion-card-content>
+    </ion-card>
+    
+  </div> -->
+
+  <!-- <div *ngFor="let infos of profissional?.informacoes.info1" class="div-sub2">
+    <ion-card  class="card-conquistas">
+      <ion-card-header style="text-align: center;
+      padding-bottom: 5px;">
+      <ion-icon color="primary" size="large" [name]="infos"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>
+          {{infos}}
+          <p>
+            {{infos}}
+          </p>
+        </ion-label>
+      </ion-card-content>
+      </ion-card>
+  </div> -->
+  <div class="div-sub">
+    <ion-label class="titulo-sub">
+      Informações Importantes
+    </ion-label>
+  </div>
+  <div class="div-sub2">
+    <ion-card  class="card-conquistas">
+      <ion-card-header style="text-align: center;
+      padding-bottom: 5px;">
+      <ion-icon color="primary" size="large" name="time"></ion-icon>
+      </ion-card-header>
+      <ion-card-content style=" padding-top: 10px;">
+        <ion-label>
+          <!-- Locais de Atendimento -->
+           Realize com antecedência 
+          <p style="font-size: 12px;">
+            <!-- Domicilio e Hospitais -->
+            Solicitações devem ser realizadas com 
+            horas ou um dia antes do serviço, o retorno
+            é conforme disponibilidade do profissional 
+          </p>
+        </ion-label>
+      </ion-card-content>
+      </ion-card>
+  </div>
+  <div class="div-sub2">
+    <ion-card class="card-conquistas">
+      <ion-card-header style="text-align: center;
+      padding-bottom: 5px; padding-top: 0;">
+      <ion-icon color="primary" size="large" name="warning"></ion-icon>
+      </ion-card-header>
+      <ion-card-content style="padding-top: 10px;">
+        <ion-label>
+          Saiba os horários
+          <p style="font-size: 12px;">
+            Confirme os horários de entrada e saida 
+            do seu hospital, para organizar melhor com
+            o profissional
+          </p>
+        </ion-label>
+      </ion-card-content>
+      </ion-card>
+  </div>
+  <div class="div-sub2">
+    <ion-card class="card-conquistas">
+      <ion-card-header style="text-align: center;
+      padding-bottom: 5px; padding-top: 0;">
+      <ion-icon color="primary" size="large" name="pin"></ion-icon>
+      </ion-card-header>
+      <ion-card-content style="padding-top: 10px;">
+        <ion-label>
+          Pontos de encontro
+          <p style="font-size: 12px;">
+           Encontre dentro ou em frente do hospital 
+           seu profissional para atuação.
+          </p>
+        </ion-label>
+      </ion-card-content>
+      </ion-card>
+  </div>
+  <!-- <ion-card class="card-info">
+    <ion-card-header class="flex-start">
+      <ion-icon class="margin-right-10" size="large" color="primary" name="medkit"></ion-icon>
+      <ion-card-subtitle>
+        Sobre Pagamentos
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="flex-start">
+        <ion-icon class="margin-right-10" color="primary" size="large" name="cash"></ion-icon>
+        <ion-label class="text-info">
+          <p>
+            Recomendação: alinhe sua forma de pagamento seja antes ou após a
+            estadia de comum acordo com seu profissional solicitado
+          </p>
+        </ion-label>
+      </div>
+
+    </ion-card-content>
+  </ion-card> -->
+
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="toolbar-content">
+    <div class="ion-text-center btn-time-appointment">
+      <ion-button
+        color="primary"
+        (click)="iniciarChamada()"
+        color="sl"
+        mode="ios"
+        class="appointment">
+        Iniciar atendimento
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

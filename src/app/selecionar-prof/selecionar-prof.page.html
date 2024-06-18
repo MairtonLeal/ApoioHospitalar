@@ -1,0 +1,89 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar-content">
+    <div>
+      <ion-label class="title">
+        Selecione seu atendimento
+        <p>Escolha de acordo com suas necessidades</p>
+      </ion-label>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="fechar()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card button (click)="selecionarOpcao(1)" [color]="selectOption === 1 ? 'primary': ''" class="card-option">
+    <ion-card-content>
+      <div class="flex-between">
+        <div class="flex-center">
+          <div class="box-options">
+            <div class="flex-box">
+              <img class="img-icons" src="assets/icon/short_stay.svg" />
+              <img class="img-icons" src="assets/icon/local_hospital.svg" />
+            </div>
+            <div class="flex-box">
+              <img class="img-icons" src="assets/icon/vaccines.svg" />
+              <img class="img-icons" src="assets/icon/clinical_notes.svg" />
+            </div>
+          </div>
+          <div class="container-text">
+            <ion-label>
+              Serviços Básicos
+              <p>
+                Pacientes que precisam realizar:
+                troca de curativos,  checkagem de pressão e glicemia
+                etc.
+              </p>
+            </ion-label>
+          </div>
+        </div>
+        <div class="container-icon">
+          <ion-icon [name]="selectOption === 1  ? 'checkmark-circle' : 'radio-button-off-outline'"></ion-icon>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card [disabled]="infoVazia" button (click)="selecionarOpcao(2)" [color]="selectOption === 2 ? 'primary': ''" class="card-option">
+    <ion-card-content>
+      <div class="flex-between">
+        <div class="flex-center">
+          <div class="box-options">
+            <div class="flex-box">
+              <img class="img-icons" src="assets/icon/home_health.svg" />
+              <img class="img-icons" src="assets/icon/stethoscope_check.svg" />
+            </div>
+            <div class="flex-box">
+              <img class="img-icons" src="assets/icon/pacemaker.svg" />
+              <img class="img-icons" src="assets/icon/clinical_notes.svg" />
+            </div>
+          </div>
+          <div class="container-text">
+            <ion-label>
+              Acompanhamentos
+              <p>
+              Pacientes que precisam de acompanhamentos domiciliares ou hospitalares
+              </p>
+            </ion-label>
+          </div>
+        </div>
+        <div class="container-icon">
+          <ion-icon [name]="selectOption === 2 ? 'checkmark-circle' : 'radio-button-off-outline'"></ion-icon>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="padding: 0" color="light" mode="md">
+    <ion-button (click)="irParaRota()" class="sl-pay"
+    [disabled]="selectOption === undefined"
+    color="primary" expand="full">
+      <ion-label> Selecionar Atendimento </ion-label>
+      <ion-icon color="light" name="chevron-forward"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

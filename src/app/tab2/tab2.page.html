@@ -1,17 +1,346 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar class="header">
+    <ion-button mode="md" slot="end" (click)="atualizarPagina()" fill="clear">
+      <ion-icon size="large" color="primary" name="refresh-circle"></ion-icon>
+    </ion-button>
+    <ion-title> Atendimentos </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <!-- <div *ngIf="carregando" class="container-loading">
+    <ion-label style="text-align: center" color="sl">
+      Carregando <br />
+      <ion-spinner color="primary" name="crescent"></ion-spinner>
+    </ion-label>
+  </div> -->
+  <div *ngIf="errorConexao && !carregando">
+    <div class="container-loading">
+      <div class="flex-center">
+        <img src="assets/error.svg" />
+      </div>
+    </div>
+    <div class="container-text-loading">
+      <ion-label>
+        Sem conexão, verifique sua internet
+      </ion-label>
+    </div>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div *ngIf="carregando">
+    <div class="sub-title2">
+      <ion-skeleton-text style="width: 60%;" [animated]="true"></ion-skeleton-text>
+    </div>
+    <br />
+    <br />
+    <ion-card mode="ios" color="primary" class="card-servico">
+      <ion-card-content>
+        <div class="item-img">
+          <div>
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+          <div style="margin-right: 10px">
+            <ion-skeleton-text style="width: 80%;" [animated]="true"></ion-skeleton-text>
+          </div>
+        </div>
+        <div class="item-info">
+          <ion-skeleton-text style="width: 80%;" [animated]="true"></ion-skeleton-text>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <br />
+    <br />
+    <div class="sub-title2">
+      <ion-skeleton-text style="width: 60%;" [animated]="true"></ion-skeleton-text>
+    </div>
+    <br />
+    <br />
+    <ion-card mode="ios" color="primary" class="card-servico">
+      <ion-card-content>
+        <div class="item-img">
+          <div>
+            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+          </div>
+          <div style="margin-right: 10px">
+            <ion-skeleton-text style="width: 80%;" [animated]="true"></ion-skeleton-text>
+          </div>
+        </div>
+        <div class="item-info">
+          <ion-skeleton-text style="width: 80%;" [animated]="true"></ion-skeleton-text>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <div *ngIf="!carregando">
+    <div class="sub-title2">
+      <strong slot="start"> Acompanhe Estadias </strong>
+    </div>
+
+    <ion-card class="card-alert">
+      <ion-card-header>
+        <div>
+          <ion-icon size="large" color="primary" name="fitness"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-subtitle>
+          Acompanhe suas solicitações
+        </ion-card-subtitle>
+        <ion-label class="descricao-card-alert">
+         Acompanhe status e informações
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngFor="let atendimento of estadias">
+      <ion-card *ngIf="atendimento?.status !== 'Arquivado'" mode="ios" color="primary"
+        class="card-servico2">
+        <ion-card-content>
+          <div class="item-img">
+            <div>
+              <img *ngIf="atendimento?.foto === ''"
+                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+              <img *ngIf="atendimento?.foto !== ''" [src]="atendimento?.foto" />
+            </div>
+            <div style="margin-right: 10px">
+              <ion-chip *ngIf="atendimento?.status === 'Aguardando'" class="status-chip">
+                <ion-card-subtitle color="light">
+                  <ion-label color="light">
+                    Status: Solicitando
+                  </ion-label>
+                </ion-card-subtitle>
+              </ion-chip>
+              <ion-chip *ngIf="atendimento?.status ==='Confirmado'" class="status-chip">
+                <ion-card-subtitle color="light">
+                  <ion-label color="light">
+                    Status: Confirmado
+                  </ion-label>
+                </ion-card-subtitle>
+              </ion-chip>
+              <ion-chip *ngIf="atendimento?.status ==='Iniciar_Estadia'" class="status-chip">
+                <ion-card-subtitle color="light">
+                  <ion-label color="light">
+                    Status: Profissional a camihho
+                  </ion-label>
+                </ion-card-subtitle>
+              </ion-chip>
+              <ion-chip *ngIf="atendimento?.status ==='Em_Estadia'" class="status-chip">
+                <ion-card-subtitle color="light">
+                  <ion-label color="light">
+                    Status: Estadia Iniciada
+                  </ion-label>
+                </ion-card-subtitle>
+              </ion-chip>
+
+              <ion-chip *ngIf="atendimento?.status ==='Concluido'" class="status-chip">
+                <ion-card-subtitle color="light">
+                  <ion-label color="light">
+                    Status: Estadia Concluida
+                  </ion-label>
+                </ion-card-subtitle>
+              </ion-chip>
+             
+            </div>
+          </div>
+          <div class="item-info">
+            <ion-label>
+              <p *ngIf="atendimento?.status ==='Aguardando'">
+                Aguardando confirmação do profissional 
+                em {{atendimento?.dataHora | date: 'dd/MM/YY, HH:mm'}}
+              </p>
+              <p *ngIf="atendimento?.status ==='Confirmado'">
+                Profissional confirmou sua estadia
+                em {{atendimento?.dataHora | date: 'dd/MM/YY, HH:mm'}}
+              </p>
+              <p *ngIf="atendimento?.status ==='Iniciar_Estadia'">
+                Seu profissional está indo para o local 
+                para iniciar a estadia
+              </p>
+              <p *ngIf="atendimento?.status ==='Em_Estadia'">
+                Estadia iniciada, acompanhe
+              </p>
+              <p *ngIf="atendimento?.status ==='Concluido'">
+                Estadia realizada, Avalie seu profissional
+              </p>
+            </ion-label>
+          </div>
+          <div class="item-info-buttons">
+            <!-- <ion-button *ngIf="atendimento?.status === 'Confirmado'" class="button-card"
+              (click)="chatAtendimento(atendimento?.id)" fill="clear">
+              <ion-icon color="light" name="chatbubble-ellipses"></ion-icon>
+            </ion-button> -->
+            <ion-button *ngIf="atendimento?.status !== 'Concluido'" class="button-card" (click)="detalhesEstadia(atendimento?.id)" fill="clear">
+              <ion-icon color="light" name="information-circle"></ion-icon>
+              <ion-label>
+                <p>
+                  Saiba mais
+                </p>
+              </ion-label>
+            </ion-button>
+            <ion-button *ngIf="atendimento?.status === 'Concluido'" class="button-card" (click)="avaliarProf(atendimento?.idProf, atendimento)" fill="clear">
+              <ion-icon color="light" name="star"></ion-icon>
+              <ion-label>
+                <p>
+                Avalie sua estadia
+                </p>
+              </ion-label>
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- 
+      <div class="sub-title2">
+      <strong slot="start"> Serviços Básicos </strong>
+    </div>
+    <ion-card class="card-alert">
+      <ion-card-header>
+        <div>
+          <ion-icon size="large" color="primary" name="fitness"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+         <ion-card-subtitle>
+          Serviços básicos
+        </ion-card-subtitle> 
+        <ion-label class="descricao-card-alert">
+          Acompanhe os status dos seus serviços básicos solicitados abaixo
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+    <div *ngFor="let servico of servicos">
+      <ion-card (click)="detalhesServico(servico?.id)" *ngIf="servico" mode="ios" color="primary" class="card-servico">
+        <ion-card-content>
+          <div class="item-img">
+            <div>
+              <img *ngIf="servico?.foto === ''"
+                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+              <img *ngIf="servico?.foto !== ''" [src]="servico?.foto" />
+            </div>
+            <div style="margin-right: 10px">
+              <ion-card-subtitle color="light" *ngIf="servico?.status ==='Confirmado_Servico'">
+                Status: Serviço Iniciado
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="servico?.status ==='Iniciar_Servico'">
+                Status: Confirmar Serviço
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="servico?.status ==='Em_Servico'">
+                Status: À caminho
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="servico?.status ==='Solicitando'">
+                Status: Solicitando
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="servico?.status ==='Confirmado'">
+                Status: Confirmado
+              </ion-card-subtitle>
+              <ion-progress-bar *ngIf="servico?.status === 'Solicitando'" buffer="0.5" value="0.5"
+                color="light"></ion-progress-bar>
+              <ion-progress-bar *ngIf="servico?.status === 'Confirmado'" buffer="0.9" value="0.9"
+                color="light"></ion-progress-bar>
+            </div>
+          </div>
+          <div class="item-info">
+            <ion-label>
+              {{servico?.procedimento}}
+              <p>
+                {{servico?.nome}} <br />
+                {{servico?.profissao}}
+              </p>
+            </ion-label>
+          </div>
+        </ion-card-content>
+        <div class="item-info-buttons">
+          <ion-button *ngIf="servico?.status !== 'Iniciar_Servico'" class="button-card" fill="clear">
+            <ion-icon color="light" name="information-circle"></ion-icon>
+
+          </ion-button>
+          <ion-button *ngIf="servico?.status === 'Iniciar_Servico'" class="button-card" fill="clear">
+            <ion-icon color="light" name="alert-circle"></ion-icon>
+            <ion-label color="light">
+              Detalhes
+            </ion-label>
+          </ion-button>
+        </div>
+      </ion-card>
+    </div>
+
+    <div class="sub-title2">
+      <strong slot="start"> Acompanhamentos </strong>
+    </div>
+
+    <ion-card class="card-alert">
+      <ion-card-header>
+        <div>
+          <ion-icon size="large" color="primary" name="fitness"></ion-icon>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+         <ion-card-subtitle>
+          Conheça seu profissional
+        </ion-card-subtitle> 
+        <ion-label class="descricao-card-alert">
+          Acompanhe os status dos seus atendimentos solicitados abaixo
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+
+
+    <div *ngFor="let atendimento of atendimentos">
+      <ion-card *ngIf="atendimento && atendimento?.status !== 'Arquivado'" mode="ios" color="primary"
+        class="card-servico2">
+        <ion-card-content>
+          <div class="item-img">
+            <div>
+              <img *ngIf="atendimento?.foto === ''"
+                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+              <img *ngIf="atendimento?.foto !== ''" [src]="atendimento?.foto" />
+            </div>
+            <div style="margin-right: 10px">
+              <ion-card-subtitle color="light" *ngIf="atendimento?.status ==='Confirmado_Atendimento'">
+                Status: Atendimento iniciado
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="atendimento?.status ==='Iniciar_Atendimento'">
+                Status: Atendimento à Caminho
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="atendimento?.status ==='Em_Atendimento'">
+                Status: Em Atendimento
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="atendimento?.status ==='Aguardando'">
+                Status: Solicitando
+              </ion-card-subtitle>
+              <ion-card-subtitle color="light" *ngIf="atendimento?.status ==='Confirmado'">
+                Status: Confirmado
+              </ion-card-subtitle>
+              <ion-progress-bar *ngIf="atendimento?.status === 'Aguardando'" buffer="0.5" value="0.5"
+                color="light"></ion-progress-bar>
+              <ion-progress-bar *ngIf="atendimento?.status === 'Confirmado'" buffer="0.9" value="0.9"
+                color="light"></ion-progress-bar>
+            </div>
+          </div>
+          <div class="item-info">
+            <ion-label>
+              {{atendimento?.cuidadoAssis}}
+              <p>
+                {{atendimento?.profissional}} <br />
+                {{atendimento?.profissao}}
+              </p>
+            </ion-label>
+          </div>
+          <div class="item-info-buttons">
+            <ion-button *ngIf="atendimento?.status === 'Confirmado'" class="button-card"
+              (click)="chatAtendimento(atendimento?.id)" fill="clear">
+              <ion-icon color="light" name="chatbubble-ellipses"></ion-icon>
+            </ion-button>
+            <ion-button class="button-card" (click)="detalhes(atendimento?.id)" fill="clear">
+              <ion-icon color="light" name="information-circle"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div> -->
+  </div>
+
+
+
 </ion-content>
