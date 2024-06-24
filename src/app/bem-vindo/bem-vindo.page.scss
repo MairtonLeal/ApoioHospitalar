@@ -69,7 +69,7 @@ h1{
 
 
 ion-content {
-  --background: none;
+  --background: var(--ion-color-primary);
   background-color: transparent;
 }
 
@@ -126,4 +126,13 @@ h2, p {
   p{
       color:var(--ion-color-medium);
   }
+}
+
+.logo-img{
+  display: block;
+  width: 170px;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 10px;
+  object-fit: contain;
 }

@@ -91,7 +91,7 @@ export class Tab4Page implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Suporte e informações',
       subHeader: 'Sugestões, Elogios e Reclamações',
-      message: 'Mande um email para <a>suporte.sollow@gmail.com</a> <br /> Entraremos em contato assim que possivel',
+      message: 'Mande um email para Entraremos em contato assim que possivel',
       buttons: ['Fechar']
     });
 

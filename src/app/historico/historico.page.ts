@@ -33,8 +33,7 @@ export class HistoricoPage  {
   ) {}
   ionViewWillEnter() {
     this.usuarioId = localStorage.getItem(Keys.userSollow);
-    this.getServicosAgendados();
-    this.getHistoricoAtendimentos();
+
     this.getEstadias();
   }
 
@@ -52,47 +51,12 @@ export class HistoricoPage  {
   async atualizarPagina() {
     this.carregando = true;
     setTimeout(() => {
-      this.getServicosAgendados();
+      this.getEstadias();
       this.carregando = false;
     }, 2000);
   }
 
-  getServicosAgendados() {
-    this.carregando = true;
-    this.fbstore
-      .collection(`Servico`, (ref: any) => ref.where('historico', '==', true))
-      .snapshotChanges()
-      .subscribe((data: any) => {
-        this.servicos = data.map((listaServicos: any) => {
-          this.meuServico = listaServicos.payload.doc.data();
-          this.carregando = false;
-          if(listaServicos.payload.doc.data().idCliente === this.usuarioId && listaServicos.payload.doc.data().idCliente !== 'Confirmado' || listaServicos.payload.doc.data().idCliente === 'Solicitando') {
-          return {
-            id: listaServicos.payload.doc.id,
-            idCliente: listaServicos.payload.doc.data().idCliente,
-            idProfissional: listaServicos.payload.doc.data().idProfissional,
-            data: listaServicos.payload.doc.data().dataEHora,
-            procedimento: listaServicos.payload.doc.data().tipoServico,
-            nome: listaServicos.payload.doc.data().nomeProfissional,
-            foto: listaServicos.payload.doc.data().fotoProfissional,
-            profissao: listaServicos.payload.doc.data().profissao,
-            status: listaServicos.payload.doc.data().status,
-            endereco: listaServicos.payload.doc.data().endereco,
-            valor: listaServicos.payload.doc.data().valorServico,
-            historico: listaServicos.payload.doc.data().historico,
-            motivo: listaServicos.payload.doc.data().motivo,
-          };
-        } else {
-          return null
-        }
-        });
-        of(data)
-          .pipe(delay(1500))
-          .subscribe(() => {
-            this.carregando = false;
-          });
-      });
-  }
+
   async avaliarProf(id: any, profissional: any) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -159,38 +123,7 @@ export class HistoricoPage  {
     await alert.present();
   }
 
-  async getHistoricoAtendimentos() {
-    this.fbstore
-      .collection(`Historico`)
-      .snapshotChanges()
-      .subscribe((data: any) => {
-        this.historicoAtendimentos = data.map((lista: any) => {
-          this.carregando = false;
-          if (
-            lista.payload.doc.data().servico.idCliente === this.usuarioId
-          ) {
-            return {
-              id: lista.payload.doc.id,
-              status: lista.payload.doc.data().status,
-              data: lista.payload.doc.data().servico.dataHora,
-              cuidado: lista.payload.doc.data().servico.cuidadoAss,
-              tipo: lista.payload.doc.data().servico.tipoCuidado,
-              obs: lista.payload.doc.data().servico.obs,
-              valor: lista.payload.doc.data().servico.valorCuidado,
-              pagamento: lista.payload.doc.data().servico.formaPagamento,
-              endereco: lista.payload.doc.data().servico.endereco,
-            };
-          } else {
-            return null;
-          }
-        });
-        of(data)
-          .pipe(delay(1500))
-          .subscribe(() => {
-            this.carregando = false;
-          });
-      });
-  }
+
 
   getEstadias() {
     this.carregando = true;
@@ -200,8 +133,6 @@ export class HistoricoPage  {
       .subscribe((data: any) => {
         this.estadias = data.map((lista: any) => {
           this.carregando = false;
-      
-            console.log(lista.payload.doc.data())
           return {
             id: lista.payload.doc.id,
             idProf: lista.payload.doc.data().idProfissional,

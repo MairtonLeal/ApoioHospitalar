@@ -95,6 +95,7 @@ ion-content {
         }
         p {
           font-size: 16px;
+          color: #ffff;
         }
 
         p:nth-child(1) {
@@ -425,4 +426,13 @@ ion-card-title {
   border-radius: 10px;
   background-color: rgba(244, 245, 248, 0.25);
   margin-bottom: 30px;
+}
+
+.item-info {
+  ion-label {
+    // text-align: left;
+    p{
+      color: #fff;
+    }
+  }
 }

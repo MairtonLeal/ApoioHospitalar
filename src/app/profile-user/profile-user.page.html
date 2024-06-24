@@ -12,8 +12,8 @@
 <ion-content>
   <div class="sl-containerAvatar">
     <ion-avatar>
-      <img *ngIf="meuUsuario?.fotoPerfil === ''" src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
-      <img *ngIf="meuUsuario?.fotoPerfil !== ''" [src]="meuUsuario?.fotoPerfil" />
+      <img *ngIf="exibirFoto === ''" src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+      <img *ngIf="exibirFoto !== ''" [src]="exibirFoto" />
       <ion-badge (click)="fotoPerfil()" color="sl" class="sl-camera" fill="clear">
         <ion-icon  color="light" name="camera"></ion-icon>
       </ion-badge>

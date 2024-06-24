@@ -173,8 +173,6 @@ export class AddEstadiaPage implements OnInit {
     },
   ];
 
-
-
   profissional: any;
   itemEstadia: any;
 
@@ -274,10 +272,7 @@ export class AddEstadiaPage implements OnInit {
                 profissao: this.profissionalSelecionado.profissao,
                 formaPagamento: this.formaDePagamento,
                 dataHora: this.dataHora,
-                // cuidadoAss: this.optAcompSelecionado,
-                // tipoCuidado: this.tipoAtendimento,
-                // diasDeEstadia: this.diasDeServico,
-                // obsIdoso: this.obsIdoso,
+
                 valorTotal: this.planoSelecionado.valor,
                 estadia: this.planoSelecionado,
                 informacoes: this.itemsAvaliacao,
@@ -467,7 +462,7 @@ export class AddEstadiaPage implements OnInit {
 
   async escolherPlano(plano: any) {
     this.planoSelecionado = plano;
-    this.valorTotalEstadia = this.planoSelecionado.valor + 9.99;
+    this.valorTotalEstadia = this.planoSelecionado.valor;
   }
 
   // async addItems(itemSelecionado: any){

@@ -21,7 +21,7 @@
   </div>
   <div *ngIf="!carregando">
     <div *ngFor="let estadia of estadias" class="order-items">
-      <ion-card *ngIf="estadia" mode="ios" color="sl">
+      <ion-card *ngIf="estadia || estadia?.status === 'Arquivado'" mode="ios" color="sl">
         <ion-card-header>
           <!-- <ion-card-title>
             Estadia {{estadia?.valor | currency: 'BRL'}}

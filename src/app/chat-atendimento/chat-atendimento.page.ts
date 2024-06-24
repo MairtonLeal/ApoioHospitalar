@@ -35,7 +35,7 @@ export class ChatAtendimentoPage implements OnInit {
 
   async getAtendimento() {
     this.fbstore
-      .collection('Atendimento')
+      .collection('estadia')
       .doc(this.atendimentoId)
       .valueChanges()
       .subscribe((singleDoc) => {
@@ -44,18 +44,6 @@ export class ChatAtendimentoPage implements OnInit {
         this.getUsuario(this.atendimentoDados.idCliente);
       });
   }
-
-  //  async getProfissional(id) {
-  //   this.fbstore
-  //     .collection('Profissionais')
-  //     .doc(id)
-  //     .valueChanges()
-  //     .subscribe((singleDoc) => {
-  //       this.profdoAtendimento = singleDoc;
-  //       console.log(this.profdoAtendimento);
-  //     });
-  // }
-
 
   async getUsuario(id: any) {
     this.fbstore
@@ -68,9 +56,8 @@ export class ChatAtendimentoPage implements OnInit {
   }
 
   async enviarMensagemProf() {
-    console.log(this.atendimentoId);
     this.fbstore
-      .collection('Atendimento')
+      .collection('estadia')
       .doc(this.atendimentoId)
       .collection('Chat')
       .add({
@@ -94,7 +81,7 @@ export class ChatAtendimentoPage implements OnInit {
 
   async getMensagens() {
     this.fbstore
-      .collection('Atendimento')
+      .collection('estadia')
       .doc(this.atendimentoId)
       .collection('Chat', (ref) => ref.orderBy('enviandoEm', 'asc'))
       .snapshotChanges()

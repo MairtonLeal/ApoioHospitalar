@@ -20,7 +20,7 @@
 
 <ion-content class="ion-padding" [fullscreen]="true">
 
-  <swiper-container  #swiper [allowTouchMove]="false">
+  <swiper-container #swiper [allowTouchMove]="false">
     <swiper-slide>
       <div class="sub-title2">
         <strong slot="start">
@@ -64,33 +64,7 @@
           </p>
         </ion-label>
       </ion-item>
-      <!-- <ion-item class="sl-options" lines="none">
-        <ion-icon name="location-outline" slot="start"></ion-icon>
-        <ion-label position="stacked"> Cep do Endereço </ion-label>
-        <ion-input enterkeyhint="next" maxlength="8" [(ngModel)]="cepCode"  type="tel"
-          placeholder="0000-000"></ion-input>
-      </ion-item>
 
-      <ion-item class="sl-options" lines="none">
-        <ion-icon name="location-outline" slot="start"></ion-icon>
-        <ion-label position="stacked"> Seu endereço </ion-label>
-        <ion-input enterkeyhint="next"  [(ngModel)]="locateAdress" type="text"
-          placeholder="Endereço: rua reduto"></ion-input>
-      </ion-item>
-
-      <ion-item class="sl-options" lines="none">
-        <ion-icon name="location-outline" slot="start"></ion-icon>
-        <ion-label position="stacked"> Seu Nº </ion-label>
-        <ion-input  enterkeyhint="done" [(ngModel)]="numberAdress" type="tel"
-          placeholder="Nº 00"></ion-input>
-      </ion-item>
-
-      <ion-item class="sl-options" lines="none">
-        <ion-icon name="location-outline" slot="start"></ion-icon>
-        <ion-label position="stacked"> Seu bairro </ion-label>
-        <ion-input  enterkeyhint="next" [(ngModel)]="districtAdress" type="text"
-          placeholder="Bairro: Reduto"></ion-input>
-      </ion-item> -->
       <ion-item class="sl-options" lines="none">
         <ion-icon name="location-outline" slot="start"></ion-icon>
         <ion-label position="stacked"> Seu complemento </ion-label>
@@ -98,12 +72,30 @@
           placeholder="(opcional) Ex: proximo ao posto"></ion-input>
       </ion-item>
 
-      <ion-item class="sl-options" lines="none">
+      <!-- <ion-item class="sl-options" lines="none">
         <ion-icon name="information-outline" slot="start"></ion-icon>
         <ion-label position="stacked"> Ponto de encontro </ion-label>
         <ion-input enterkeyhint="done" [(ngModel)]="pontoDeEncontro" type="text"
           placeholder="Em frente ao hospital"></ion-input>
+      </ion-item> -->
+      <ion-item class="sl-options" lines="none">
+        <ion-select label="Ponto de encontro"
+        label-placement="stacked"
+        interface="action-sheet" 
+        [(ngModel)]="pontoDeEncontro" 
+        placeholder="Selecione">
+          <ion-select-option value="Entrada do Hospital">
+            Entrada do Hospital
+          </ion-select-option>
+          <ion-select-option value="Local de visita">
+            Local de visita
+          </ion-select-option>
+          <ion-select-option value="Recepção">
+            Recepção
+          </ion-select-option>
+        </ion-select>
       </ion-item>
+      
 
       <div class="sub-title2">
         <strong slot="start">
@@ -126,7 +118,7 @@
     <swiper-slide>
       <div class="sub-title2">
         <strong slot="start">
-            Na Estadia:
+           Agendamento para:
           <ion-icon *ngIf="beneficioPagamento !== undefined" style="margin-left: 8px" color="sl" name="checkmark-circle"></ion-icon>
         </strong>
       </div>
@@ -241,9 +233,6 @@
             <div>
               <ion-label>
                 Atendimento:  {{planoSelecionado?.valor | currency: 'BRL'}}  
-                <p>
-                  Taxa do aplicativo: R$ 9,99
-                </p>
               </ion-label>
             </div>
           </div>
@@ -302,7 +291,6 @@
                 {{planoSelecionado?.descricao}}
                 <p>
                   {{planoSelecionado?.tempo}}
-
                 </p>
               </ion-label>
             </div>

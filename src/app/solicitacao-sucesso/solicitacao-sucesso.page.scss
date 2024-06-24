@@ -53,12 +53,15 @@
     justify-content: center;
   }
 
-
-
   .button-float2{
     height: 52px;
     width: 90%;
     text-transform: none;
     --border-radius: 10px;
     --box-shadow: 8px 4px 25px 0px rgba(0, 0, 0, 0.08);
+  }
+
+  .img-sucesso {
+    height: 200px;
+    width: 200px;
   }

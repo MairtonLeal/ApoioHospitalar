@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
-import {  LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,6 +16,9 @@ import {
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+
+
 
 @Component({
   selector: 'app-cadastro',
@@ -51,15 +53,14 @@ export class CadastroPage implements OnInit {
     private toastservice: ToastService,
     private afStorage: AngularFireStorage,
     private fbauth: AngularFireAuth,
-    private imagePicker: ImagePicker,
     private loadingController: LoadingController
-  ) {}
+  ) { }
 
   ngOnInit() {
-  this.idSendUser = localStorage.getItem(Keys.playerId);
+    this.idSendUser = localStorage.getItem(Keys.playerId);
   }
 
-  async finish() {}
+  async finish() { }
   async doSignup() {
     if (!this.signupform.get('useremail')?.value) {
       this.toastservice.showToast(
@@ -82,20 +83,13 @@ export class CadastroPage implements OnInit {
         'danger'
       );
     }
-    // if (this.nomeIdoso === '') {
-    //   this.toastservice.showToast(
-    //     'Erro ao Cadastrar, Preencha o campo Telefone',
-    //     2000,
-    //     'danger'
-    //   );
-    // }
-    // if (this.idadeIdoso === undefined) {
-    //   this.toastservice.showToast(
-    //     'Erro ao Cadastrar, Idade do idoso',
-    //     2000,
-    //     'danger'
-    //   );
-    // }
+    if (this.nomeIdoso === '') {
+      this.toastservice.showToast(
+        'Erro ao Cadastrar, Preencha o campo paciente',
+        2000,
+        'danger'
+      );
+    }
     if (this.telefone === '') {
       this.toastservice.showToast(
         'Erro ao Cadastrar, Preencha o campo Telefone',
@@ -108,69 +102,86 @@ export class CadastroPage implements OnInit {
         const email = this.signupform.get('useremail')?.value as string;
         const senha = this.signupform.get('userpass')?.value as string;
         this.button = true;
-        if(this.exibirFoto){
-          const loading = await this.loadingController.create({
-            message: 'Cadastrando usuário ...',
-          });
-          loading.present();
+        if (this.exibirFoto) {
+  
           await this.fbauth
-          .createUserWithEmailAndPassword(email, senha)
-          .then((data: any) => {
-            data.user.updateProfile({
-              displayName: this.nameResp,
-            });
-            this.idDoc = data.user.uid;
-            // const randomId = Math.random().toString(36).substring(2);
-            const ref = this.afStorage.ref(this.idDoc );
-            const task = ref.put(
-              this.dataURItoBlob(this.exibirFoto)
-            );
-            this.uploadProgress = task
-              .snapshotChanges()
-              .pipe(map((s: any) => s.bytesTransferred / s.totalBytes));
-            task.then((res: any) => {
-              ref
-                .getDownloadURL()
-                .toPromise()
-                .then((result: string) => {
-                  // this.cliente.usuario.foto = result;
-                  // this.uploadProgress = null;
-                  // this.atualizado().then();
-                  this.verFoto = result;
-                  this.fbstore
-                  .collection('Idosos')
-                  .doc(this.idDoc)
-                  .set({
-                    email: this.signupform.get('useremail')?.value,
-                    telefone: this.telefone,
-                    nomeResp: this.nameResp,
-                    // nomeIdoso: this.nomeIdoso,
-                    // idadeIdoso: this.idadeIdoso,
-                    // sobreIdoso: this.sobreIdoso, 
-                    fotoPerfil: this.verFoto,
-                    playerId: this.idSendUser
-                  })
-                  .then(() => {
-                    this.router.navigate(['/tabs/tab1']);
-                    loading.dismiss()
-                    this.button = false;
-                    localStorage.setItem(Keys.userSollow, this.idDoc);
+            .createUserWithEmailAndPassword(email, senha)
+            .then((data: any) => {
+              data.user.updateProfile({
+                displayName: this.nameResp,
+              });
+              this.idDoc = data.user.uid;
+              // const randomId = Math.random().toString(36).substring(2);
+              const ref = this.afStorage.ref(this.idDoc);
+              const task = ref.put(
+                this.dataURItoBlob(this.exibirFoto)
+              );
+              this.uploadProgress = task
+                .snapshotChanges()
+                .pipe(map((s: any) => s.bytesTransferred / s.totalBytes));
+              task.then((res: any) => {
+                ref
+                  .getDownloadURL()
+                  .toPromise()
+                  .then((result: string) => {
+                    // this.cliente.usuario.foto = result;
+                    // this.uploadProgress = null;
+                    // this.atualizado().then();
+                    this.verFoto = result;
+                    this.fbstore
+                      .collection('Idosos')
+                      .doc(this.idDoc)
+                      .set({
+                        email: this.signupform.get('useremail')?.value,
+                        telefone: this.telefone,
+                        nomeResp: this.nameResp,
+                        nomeIdoso: this.nomeIdoso,
+                        fotoPerfil: this.verFoto,
+                        playerId: this.idSendUser
+                      })
+                      .then(() => {
+                        this.router.navigate(['/tabs/tab1']);
+                        this.button = false;
+                        localStorage.setItem(Keys.userSollow, this.idDoc);
+                      });
                   });
-                });
+              });
             });
-          
-            // .then((result) => {
-            //   localStorage.setItem(Keys.token, result.id);
-            //   console.log(result.id);
-            // });
-          });
         } else {
-          this.toastservice.showToast(
-            'Erro ao Cadastrar, coloque a foto',
-            2000,
-            'danger'
-          );
-          this.button = false;
+          await this.fbauth
+            .createUserWithEmailAndPassword(email, senha)
+            .then((data: any) => {
+              data.user.updateProfile({
+                displayName: this.nameResp,
+              });
+              this.idDoc = data.user.uid;
+              localStorage.setItem(Keys.userSollow, this.idDoc);
+              this.fbstore
+                .collection('Idosos')
+                .doc(this.idDoc)
+                .set({
+                  email: this.signupform.get('useremail')?.value,
+                  telefone: this.telefone,
+                  nomeResp: this.nameResp,
+                  nomeIdoso: this.nomeIdoso,
+                  fotoPerfil: '',
+                  playerId: this.idSendUser
+                })
+                .then(() => {
+                  this.router.navigate(['/tabs/tab1']);
+                  this.button = false;
+                
+                })
+                .catch(() => {
+                  this.button = false;
+                  this.toastservice.showToast(
+                    'Erro ao Cadastrar, tente novamente',
+                    2000,
+                    'danger'
+                  );
+                })
+            });
+
         }
       } catch (error: any) {
         switch (error.code) {
@@ -189,47 +200,47 @@ export class CadastroPage implements OnInit {
     }
   }
 
-  fotoPerfil(): void {
-    this.imagePicker
-      .getPictures({
-        quality: 100,
-        maximumImagesCount: 1,
-        title: 'Selecionar foto',
-        outputType: 1, // base64
-      })
-      .then(
-        (results) => {
-          this.exibirFoto = 'data:image/png;base64,' + results[0];
-          // const randomId = Math.random().toString(36).substring(2);
-          // const ref = this.afStorage.ref(randomId);
-          // const task = ref.put(
-          //   this.dataURItoBlob('data:image/png;base64,' + results[0])
-          // );
-          // this.uploadProgress = task
-          //   .snapshotChanges()
-          //   .pipe(map((s: any) => s.bytesTransferred / s.totalBytes));
-          // task.then((res: any) => {
-          //   ref
-          //     .getDownloadURL()
-          //     .toPromise()
-          //     .then((result: string) => {
-          //       // this.cliente.usuario.foto = result;
-          //       this.verFoto = result;
-          //       // this.uploadProgress = null;
-          //       // this.atualizado().then();
-          //     });
-          // });
-        },
-        (err) => {
-          // alert('Camera não habilitada');
-          this.toastservice.showToast(
-            'Erro ao tirar foto, tente novamente',
-            2000,
-            'danger'
-          );
-          console.log(err);
-        }
-      );
+  async fotoPerfil() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos
+    });
+    
+    this.exibirFoto =  image.dataUrl;
+    console.log("teste "+ this.dataURItoBlob(this.exibirFoto));
+    // const imageShow = await Camera.getPhoto({
+    //   quality: 90,
+    //   allowEditing: true,
+    //   resultType: CameraResultType.Base64,
+    //   promptLabelPicture: '',
+    
+    // });
+    // var imageUrl = imageShow.webPath;
+    // console.log(imageUrl);
+    // Can be set to the src of an image now
+    // this.imagePicker
+    //   .getPictures({
+    //     quality: 100,
+    //     maximumImagesCount: 1,
+    //     title: 'Selecionar foto',
+    //     outputType: 1, // base64
+    //   })
+    //   .then(
+    //     (results) => {
+    //       this.exibirFoto = 'data:image/png;base64,' + results[0];
+    //     },
+    //     (err) => {
+    //       // alert('Camera não habilitada');
+    //       this.toastservice.showToast(
+    //         'Erro ao tirar foto, tente novamente',
+    //         2000,
+    //         'danger'
+    //       );
+    //       console.log(err);
+    //     }
+    //   );
   }
 
   private dataURItoBlob(dataURI: string) {

@@ -42,15 +42,14 @@
         </div>
       </ion-card-header>
       <ion-card-content>
-
         <div class="item-info">
           <ion-skeleton-text [animated]="true"></ion-skeleton-text>
         </div>
       </ion-card-content>
     </ion-card>
   </div>
-<div *ngIf="!carregando">
-
+  
+  <div *ngIf="!carregando">
     <div class="sub-title2">
       <strong slot="start">
         Seus dados básicos
@@ -175,20 +174,6 @@
     <div class="sub-title2">
       <strong slot="start">Profissionais disponiveis</strong>
     </div>
-
-    <!-- <ion-card  class="card-alert">
-      <ion-card-header>
-        <div>
-          <ion-icon size="large" color="primary" name="medkit"></ion-icon>
-        </div>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-label class="descricao-card-alert">
-          Clique no card para iniciar um atendimento
-        </ion-label>
-      </ion-card-content>
-    </ion-card> -->
-
     <div *ngFor="let profissional of profissionais">
       <ion-card button (click)="goProf(profissional)" class="professional-card-list">
         <ion-card-header>
@@ -199,21 +184,13 @@
           </div>
         </ion-card-header>
         <ion-card-content>
-
           <div class="item-info">
             <ion-label>
               {{profissional?.nome}}
               <p> 
-                <!-- {{profissional?.profissao}} -->
                 Clique aqui para solicitar sua estadia
               </p>
             </ion-label>
-            <!-- <ion-button mode="ios" fill="clear" class="button-select" color="primary"> -->
-            <!-- <ion-label color="light">
-          Iniciar
-        </ion-label> -->
-            <!-- <ion-icon color="primary" name="arrow-forward-circle"></ion-icon>
-      </ion-button> -->
           </div>
         </ion-card-content>
       </ion-card>

@@ -7,7 +7,6 @@ import {environment} from '../environments/environment';
 
 
 import {Validator} from './helpers/validation.helpers';
-import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 import { OneSignal } from '@awesome-cordova-plugins/onesignal/ngx';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -35,7 +34,7 @@ registerLocaleData(localePt);
         HttpClientModule,
     AppRoutingModule],
   providers: [
-    Validator,ImagePicker, OneSignal, NativeGeocoder,
+    Validator, OneSignal, NativeGeocoder,
     {
       provide: LOCALE_ID,
       useValue: "pt-BR"

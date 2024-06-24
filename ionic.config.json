@@ -1,5 +1,7 @@
 {
   "name": "apoiohospitalar",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

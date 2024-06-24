@@ -22,6 +22,8 @@ export class DetailEstadiaPage implements OnInit {
   mensagens: any;
   usuarioId: any;
   isModalChatOpen = false;
+  mensagem = '';
+
   constructor(
     private navParams: NavParams,
     private fbstore: AngularFirestore,
@@ -87,9 +89,6 @@ export class DetailEstadiaPage implements OnInit {
   }
 
   async salvarHistorico(id: any, motivo: any) {
-    this.fbstore
-      .doc(`Estadia/${id}`)
-      .delete().then(() => {
         // let historicoId = this.dataHistorico + this.usuarioId;
         this.fechar();
         this.toastController.showToast(
@@ -105,21 +104,12 @@ export class DetailEstadiaPage implements OnInit {
         this.fbstore
         .doc(`Estadia/${id}`)
         .update({
-          statusEstadia: 'Arquivado',
+          statusEstadia: 'Cancelado',
         })
         .catch((error) => {
           console.log(error);
          
         });
-        // this.fbstore
-        //   .doc(`Historico/${historicoId}`)
-        //   .set({
-        //     dadosDaEstadia: this.estadiaDados,
-        //     dataCancelamento: this.dataHistorico,
-        //     motivo: motivo
-        //   });
-      })
-
 
   }
 
@@ -173,7 +163,7 @@ export class DetailEstadiaPage implements OnInit {
           cssClass: 'confirm-button-service2',
           handler: (data: string) => {
             console.log('Alert confirmed', data);
-            this.enviarMensagemProf(data);
+            // this.enviarMensagemProf(data);
             // this.fbstore.doc('Idosos/'+this.usuarioId).update({
             //   gs: this.usuario.gs
             // }).then(() => {
@@ -191,7 +181,7 @@ export class DetailEstadiaPage implements OnInit {
   }
 
 
-  async enviarMensagemProf(message: string) {
+  async enviarMensagemProf() {
     this.fbstore
       .collection('Estadia')
       .doc(this.atendimentoId)
@@ -199,9 +189,10 @@ export class DetailEstadiaPage implements OnInit {
       .add({
         usuarioId: this.usuarioId,
         enviandoEm: this.dataAtual,
-        mensagem: message
+        mensagem: this.mensagem
       })
       .then(() => {
+        this.mensagem = '';
         this.toastController.showToast('Mensagem enviada', 1000, 'success');
         this.getMensagens();
       })

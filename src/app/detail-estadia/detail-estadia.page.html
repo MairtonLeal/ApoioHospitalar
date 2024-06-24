@@ -200,7 +200,7 @@
       <ion-icon name="chatbubbles"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-modal [isOpen]="isModalChatOpen" [initialBreakpoint]="0.65" [breakpoints]="[0, 0.65, 1]">
+  <ion-modal [isOpen]="isModalChatOpen">
     <ng-template>
       <ion-header class="ion-no-border">
         <ion-toolbar class="toolbar-header">
@@ -277,35 +277,24 @@
           </ion-card-content>
         </ion-card>
       </div>
-        <ion-footer class="ion-no-border">
-          <ion-toolbar class="footer-tool">
-            <ion-button color="primary" mode="ios" (click)="verificarStatus()"
-            class="confirm-button">
-            <!-- <ion-icon class="margin-right-10" color="light"  name="send-outline"></ion-icon> -->
-            <ion-label color="light">
-              Perguntar ao profissional
-            </ion-label>
-            <ion-icon color="light"  name="arrow-forward-circle"></ion-icon>
-          </ion-button>
-          </ion-toolbar>
-          </ion-footer>
-      </ion-content>
+    </ion-content>
+    <ion-footer class="ion-no-border">
+      <ion-item class="chat-input" mode="ios" detail="false" lines="none">
+        <ion-input placeholder="Digite sua mensagem" [(ngModel)]="mensagem">
+        </ion-input>
+        <ion-button (click)="enviarMensagemProf()" fill="clear" slot="end">
+          <ion-icon color="primary" name="send"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-footer>
+    
     </ng-template>
   </ion-modal>
 
 </ion-content>
 <ion-footer class="ion-no-border">
   <ion-toolbar class="footer-tool">
-    <!-- *ngIf="atendimentoDados?.statusAtendimento === 'Em_Atendimento'" -->
-    <!-- (click)="confirmarAtendimentoDuploFator()" -->
-    <!-- <ion-button color="primary" mode="ios" (click)="verificarStatus()"
-      *ngIf="estadiaDados?.statusEstadia ==='Confirmado_Atendimento'"
-      class="confirm-button">
-      <ion-icon class="margin-right-10" color="light" name="checkmark-circle"> </ion-icon>
-      <ion-label color="light">
-        Verificar status Paciente
-      </ion-label>
-    </ion-button> -->
+
     <ion-button
       *ngIf="estadiaDados?.statusEstadia === 'Aguardando' ||  estadiaDados?.statusEstadia === 'Confirmado'"
       mode="ios" color="danger" class="cancel-button" fill="clear" (click)="cancelarComMotivo(atendimentoId)">
